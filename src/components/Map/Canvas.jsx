@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Stage, Layer, Rect } from "react-konva";
-import { Box, Typography } from "@mui/material";
 
 const scaleBy = 1.1;
 
@@ -53,29 +52,24 @@ const MapCanvas = ({ lands, setCurrData }) => {
   };
   const width = 12;
 
-  const Map = lands?.map((data) => {
+  const Map = lands?.map((data, index) => {
     return (
-      <>
-        <Rect
-          x={data.x * width + 500}
-          y={-data.y * width + 350}
-          width={width * data.size}
-          height={width * data.size}
-          fill={getColor(data.landType, data.size, data._id, data.status)}
-          shadowBlur={eid === data._id ? 2 : 0}
-          stroke={eid === data._id ? "#81f78e" : "black"}
-          zIndex={eid === data._id ? 5000 : -500}
-          strokeWidth={eid === data._id ? 1 : 0.2}
-          onClick={() => {
-            setId(data._id);
-            setCurrData(data);
-          }}
-          onTap={() => {
-            setId(data._id);
-            setCurrData(data);
-          }}
-        />
-      </>
+      <Rect
+        key={index}
+        x={data.x * width + 500}
+        y={-data.y * width + 350}
+        width={width * data.size}
+        height={width * data.size}
+        fill={getColor(data.landType, data.size, index, data.status)}
+        shadowBlur={eid === index ? 2 : 0}
+        stroke={eid === index ? "#81f78e" : "black"}
+        zIndex={eid === index ? 5000 : -500}
+        strokeWidth={eid === index ? 1 : 0.2}
+        onClick={() => {
+          setId(index);
+          setCurrData(data);
+        }}
+      />
     );
   });
 
