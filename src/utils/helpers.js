@@ -1,6 +1,7 @@
 import { connect } from "@tableland/sdk";
 import mapdata from "./mapdata.json";
 
+
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
 export const createTable = async () => {
