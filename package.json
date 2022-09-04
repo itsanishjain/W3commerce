@@ -12,6 +12,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/material": "^5.10.3",
+    "@tableland/sdk": "^3.1.0",
     "@uauth/js": "^2.3.0",
     "canvas": "^2.9.3",
     "connectkit": "^0.0.2",

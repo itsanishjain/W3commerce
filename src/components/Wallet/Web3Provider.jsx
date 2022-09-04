@@ -9,8 +9,6 @@ const client = createClient(
   })
 );
 
-console.log({ client });
-
 const Web3Provider = ({ children }) => {
   return (
     <WagmiConfig client={client}>
