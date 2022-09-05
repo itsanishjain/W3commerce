@@ -1,6 +1,10 @@
+import { ethers } from "ethers";
 import { useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
+import { useAccount, useContract, useSigner, useNetwork } from "wagmi";
 import MapCanvas from "./Canvas";
+import { getProof } from "../../utils/createCoordinatesProof";
+import { contractAddress, abi } from "../../utils/addressAndABI";
 
 const landTypeArr = [
   {
@@ -50,11 +54,39 @@ export default function Map({ lands }) {
     }
   };
 
-  console.log("#### lands-", lands);
+  const landPrice = { 1: "1", 2: "0.002", 3: "30" };
+  const { isConnected } = useAccount();
+  const { data: signer } = useSigner();
+  const contract = useContract({
+    addressOrName: contractAddress,
+    contractInterface: abi,
+    signerOrProvider: signer,
+  });
+  const mintLand = async (x, y, landType) => {
+    console.log(landType);
+    console.log(getProof(`${x},${y}:${landType}`));
+    try {
+      await (
+        await contract.mintLand(
+          x,
+          y,
+          landType,
+          getProof(`${x},${y}:${landType}`),
+          {
+            value: ethers.utils.parseEther(landPrice[landType]),
+            gasPrice: 100000,
+          }
+        )
+      ).wait();
+      toast.success("Successfully Minted");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-    <Box >
-      <Grid  container pt={8}>
+    <Box>
+      <Grid container pt={8}>
         <Grid className="bg-green-500" item xl={2} lg={2} md={2} sm={2} xs={2}>
           <Box
             className=""
@@ -133,7 +165,7 @@ export default function Map({ lands }) {
             {/* <ContractConnect data={currData} /> */}
 
             {Object.keys(currData)?.length > 0 && (
-              <>
+              <div className="bg-blue-500">
                 <Box
                   display="flex"
                   alignItems="center"
@@ -150,7 +182,7 @@ export default function Map({ lands }) {
                 </Box>
                 <Box>
                   <Box mb={1}>
-                    <Typography variant="body2" color="grey">
+                    <Typography variant="body2" color="red">
                       Location
                     </Typography>
                   </Box>
@@ -165,7 +197,17 @@ export default function Map({ lands }) {
                     </Typography>
                   </Box>
                 </Box>
-              </>
+                {isConnected && (
+                  <button
+                    className="p-4 bg-red-500 rounded"
+                    onClick={() =>
+                      mintLand(currData.x, currData.y, currData.landType)
+                    }
+                  >
+                    Mint
+                  </button>
+                )}
+              </div>
             )}
           </Box>
         </Grid>

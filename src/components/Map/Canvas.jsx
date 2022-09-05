@@ -56,9 +56,9 @@ const MapCanvas = ({ lands, setCurrData }) => {
   };
   const width = 12;
 
-  // 
+  //
 
-  const Map = lands?.map((data, index) => {
+  const LandTile = lands?.map((data, index) => {
     return (
       <Rect
         key={index}
@@ -104,7 +104,7 @@ const MapCanvas = ({ lands, setCurrData }) => {
           return { x, y };
         }}
       >
-        <Layer>{Map}</Layer>
+        <Layer>{LandTile}</Layer>
       </Stage>
     </div>
   );

@@ -1,7 +1,7 @@
-const { MerkleTree } = require("merkletreejs");
-const keccak256 = require("keccak256");
+import { MerkleTree } from "merkletreejs";
+import keccak256 from "keccak256";
 
-const whiteListedcoordinatees = require("./cood.json");
+import whiteListedcoordinatees from "./cood.json";
 
 const leaves = whiteListedcoordinatees
   .slice(0, 460)
