@@ -98,7 +98,8 @@ export default function Map({ lands, setLands }) {
   useEffect(() => {
     streamrRef.current = new StreamrClient({
       auth: {
-        privateKey: process.env.NEXT_PUBLIC_PK,
+        // privateKey: process.env.NEXT_PUBLIC_PK,
+        ethereum: window.ethereum,
       },
     });
     streamrRef.current.subscribe(STREAM_ID, (content) => {
