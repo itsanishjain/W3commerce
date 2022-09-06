@@ -3,7 +3,7 @@ import { StreamrClient, StreamPermission } from "streamr-client";
 
 const STREAM_ID = "0x2ea3bf6b653375fb8facfb67f19937e46840a7d4/lands/";
 
-export const StreamNetwork = () => {
+const StreamNetwork = () => {
   const streamrRef = useRef();
 
   useEffect(() => {
@@ -36,3 +36,5 @@ export const StreamNetwork = () => {
 
   return <div>Stream Network</div>;
 };
+
+export default StreamNetwork;

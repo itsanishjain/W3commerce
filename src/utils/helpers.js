@@ -10,6 +10,7 @@ const tableland = connect({
 });
 
 const TABLE_NAME = "_80001_1434";
+const STREAM_ID = "0x2ea3bf6b653375fb8facfb67f19937e46840a7d4/lands/";
 
 export const createTable = async () => {
   await tableland.siwe();
@@ -49,9 +50,22 @@ export const updateTable = async (id, status, account = "") => {
   await tableland.write(
     `
     UPDATE ${TABLE_NAME} 
-    SET status = ${status},
-    name = ${account}
+    SET status = ${status}, name = ${account} 
     WHERE id = ${id};
   `
   );
+};
+
+export const updateAndPublish = async (
+  land,
+  newStatus,
+  account,
+  streamrRef
+) => {
+  await updateTable(land.id, newStatus, account);
+  await streamrRef.current.publish(STREAM_ID, {
+    ...land,
+    status: newStatus,
+    name: account,
+  });
 };

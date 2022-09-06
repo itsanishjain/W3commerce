@@ -1,11 +1,15 @@
 import { ethers } from "ethers";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import { useAccount, useContract, useSigner, useNetwork } from "wagmi";
+import { useAccount, useContract, useSigner } from "wagmi";
 import MapCanvas from "./Canvas";
 import { getProof } from "../../utils/createCoordinatesProof";
 import { contractAddress, abi } from "../../utils/addressAndABI";
 import toast from "react-hot-toast";
+import { StreamrClient } from "streamr-client";
+import { updateAndPublish, updateTable } from "../../utils/helpers";
+
+const STREAM_ID = "0x2ea3bf6b653375fb8facfb67f19937e46840a7d4/lands/";
 
 const landTypeArr = [
   {
@@ -37,7 +41,7 @@ const premiumTypeArr = [
   },
 ];
 
-export default function Map({ lands }) {
+export default function Map({ lands, setLands }) {
   const [currData, setCurrData] = useState({});
   const [landType, setLandType] = useState();
   const [premiumType, setPremiumType] = useState();
@@ -56,37 +60,53 @@ export default function Map({ lands }) {
   };
 
   const landPrice = { 1: "0.001", 2: "0.002", 3: "0.003" };
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   const { data: signer } = useSigner();
   const contract = useContract({
     addressOrName: contractAddress,
     contractInterface: abi,
     signerOrProvider: signer,
   });
-  const mintLand = async (x, y, landType) => {
-    console.log(landType);
-    console.log(getProof(`${x},${y}:${landType}`));
+  const mintLand = async (land) => {
     // database and stremer code  to make land status pending
+    await updateAndPublish(land, 0, address, streamrRef);
 
     try {
       await (
         await contract.mintLand(
-          x.toString(),
-          y.toString(),
-          landType,
-          getProof(`${x},${y}:${landType}`),
+          land.x.toString(),
+          land.y.toString(),
+          land.landType,
+          getProof(`${land.x},${land.y}:${land.landType}`),
           {
-            value: ethers.utils.parseEther(landPrice[landType]),
+            value: ethers.utils.parseEther(landPrice[land.landType]),
           }
         )
       ).wait();
-      toast.success("Successfully Minted");
       // stremer code and database to make land status minted
+      await updateAndPublish(land, 1, address, streamrRef);
+      toast.success("Successfully Minted");
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");
+      await updateAndPublish(land, -1, address, streamrRef); // we need to only update
     }
   };
+
+  const streamrRef = useRef();
+
+  useEffect(() => {
+    streamrRef.current = new StreamrClient({
+      auth: {
+        privateKey: process.env.NEXT_PUBLIC_PK,
+      },
+    });
+    streamrRef.current.subscribe(STREAM_ID, (content) => {
+      console.log({ content });
+      setLands((prev) => prev.map((x) => (x.id === content.id ? content : x)));
+      setCurrData(content);
+    });
+  }, [setLands]);
 
   return (
     <Box>
@@ -204,11 +224,11 @@ export default function Map({ lands }) {
                 {isConnected && (
                   <button
                     className="p-4 bg-red-500 rounded"
-                    onClick={() =>
-                      mintLand(currData.x, currData.y, currData.landType)
-                    }
+                    onClick={() => mintLand(currData)}
                   >
-                    Mint
+                    {currData.status === -1 && "Mint"}
+                    {currData.status === 0 && "Minting"}
+                    {currData.status === 1 && "Minted"}
                   </button>
                 )}
               </div>
