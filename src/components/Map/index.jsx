@@ -98,15 +98,22 @@ export default function Map({ lands, setLands }) {
   useEffect(() => {
     streamrRef.current = new StreamrClient({
       auth: {
-        // privateKey: process.env.NEXT_PUBLIC_PK,
-        ethereum: window.ethereum,
+        privateKey: process.env.NEXT_PUBLIC_PK,
+        // ethereum: window.ethereum,
       },
     });
-    streamrRef.current.subscribe(STREAM_ID, (content) => {
-      console.log({ content });
-      setLands((prev) => prev.map((x) => (x.id === content.id ? content : x)));
-      setCurrData(content);
-    });
+    streamrRef.current
+      .subscribe(STREAM_ID, (content) => {
+        console.log({ content });
+        setLands((prev) =>
+          prev.map((x) => (x.id === content.id ? content : x))
+        );
+        setCurrData(content);
+      })
+      .then((res) => {
+        console.log("subscribe", res);
+      })
+      .catch((err) => console.error(err));
   }, [setLands]);
 
   return (
