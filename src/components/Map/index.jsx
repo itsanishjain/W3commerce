@@ -89,7 +89,7 @@ export default function Map({ lands, setLands }) {
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");
-      await updateAndPublish(land, -1, address, streamrRef); // we need to only update
+      await updateAndPublish(land, -1, "", streamrRef); // we need to only update
     }
   };
 

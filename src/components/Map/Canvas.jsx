@@ -65,7 +65,7 @@ const MapCanvas = ({ lands, setCurrData }) => {
         fill={getColor(data.landType, data.size, index, data.status)}
         shadowBlur={eid === index ? 2 : 0}
         stroke={eid === index ? "#81f78e" : "black"}
-        zIndex={eid === index ? 5000 : -500}
+        zIndex={eid === index ? 458 : 0}
         strokeWidth={eid === index ? 1 : 0.2}
         onClick={() => {
           setId(index);
