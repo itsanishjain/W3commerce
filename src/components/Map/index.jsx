@@ -5,6 +5,7 @@ import { useAccount, useContract, useSigner, useNetwork } from "wagmi";
 import MapCanvas from "./Canvas";
 import { getProof } from "../../utils/createCoordinatesProof";
 import { contractAddress, abi } from "../../utils/addressAndABI";
+import toast from "react-hot-toast";
 
 const landTypeArr = [
   {
@@ -54,7 +55,7 @@ export default function Map({ lands }) {
     }
   };
 
-  const landPrice = { 1: "1", 2: "0.002", 3: "30" };
+  const landPrice = { 1: "0.001", 2: "0.002", 3: "0.003" };
   const { isConnected } = useAccount();
   const { data: signer } = useSigner();
   const contract = useContract({
@@ -68,19 +69,19 @@ export default function Map({ lands }) {
     try {
       await (
         await contract.mintLand(
-          x,
-          y,
+          x.toString(),
+          y.toString(),
           landType,
           getProof(`${x},${y}:${landType}`),
           {
             value: ethers.utils.parseEther(landPrice[landType]),
-            gasPrice: 100000,
           }
         )
       ).wait();
       toast.success("Successfully Minted");
     } catch (err) {
       console.error(err);
+      toast.error("Something went wrong");
     }
   };
 

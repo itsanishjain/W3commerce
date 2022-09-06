@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { Stage, Layer, Rect } from "react-konva";
 
-import toast from "react-hot-toast";
-import { ethers } from "ethers";
-import { useAccount, useContract, useSigner, useNetwork } from "wagmi";
-
 const scaleBy = 1.1;
 
 const MapCanvas = ({ lands, setCurrData }) => {
