@@ -8,14 +8,12 @@ const Map = dynamic(() => import("../src/components/Map"), {
   ssr: false,
 });
 
-const TABLE_NAME = "_80001_1434";
-
 export default function Home() {
   const [lands, setLands] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    readTable(TABLE_NAME).then((res) => {
+    readTable().then((res) => {
       setLands(res);
       setLoading(false);
     });

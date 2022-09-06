@@ -66,6 +66,8 @@ export default function Map({ lands }) {
   const mintLand = async (x, y, landType) => {
     console.log(landType);
     console.log(getProof(`${x},${y}:${landType}`));
+    // database and stremer code  to make land status pending
+
     try {
       await (
         await contract.mintLand(
@@ -79,6 +81,7 @@ export default function Map({ lands }) {
         )
       ).wait();
       toast.success("Successfully Minted");
+      // stremer code and database to make land status minted
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");
