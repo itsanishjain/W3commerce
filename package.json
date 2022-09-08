@@ -15,6 +15,7 @@
     "@mui/material": "^5.10.3",
     "@tableland/sdk": "^3.1.0",
     "@uauth/js": "^2.3.0",
+    "@xmtp/xmtp-js": "^6.1.0",
     "canvas": "^2.9.3",
     "connectkit": "^0.0.2",
     "ethers": "^5.7.0",
