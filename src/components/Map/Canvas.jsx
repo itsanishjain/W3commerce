@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Stage, Layer, Rect } from "react-konva";
 
+import { landType } from ".";
+
 const scaleBy = 1.1;
 
 const MapCanvas = ({ lands, setCurrData }) => {
@@ -31,23 +33,14 @@ const MapCanvas = ({ lands, setCurrData }) => {
     });
   };
 
-  const getColor = (land, size, id, status) => {
-    if (status === "MINTED") return "#00e600";
-    else if (status === "BOOKED") {
-      return "#b3b300";
-    } else if (status === "NOT_FOR_SALE") {
-      return "#737373";
-    }
-    if (land === "LOL" || size === 3) {
-      return "#321d70";
-    } else if (land === "CITY") {
-      return "#d82eee";
-    } else if (land === "NEIGHBOUR") {
-      return "#a365ef";
-    } else if (land === "PREMIUM LAND") {
-      return "#f8cdfc";
-    } else {
-      return "red";
+  const getColor = (land) => {
+    switch (land) {
+      case 3:
+        return landType[0].color;
+      case 2:
+        return landType[1].color;
+      case 1:
+        return landType[2].color;
     }
   };
   const width = 12;

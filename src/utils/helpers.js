@@ -1,6 +1,8 @@
 import { connect } from "@tableland/sdk";
 import mapdata from "./mapdata.json";
 
+import axios from "axios";
+
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
 // Establish a connection

@@ -7,7 +7,7 @@ import { getProof } from "../../utils/createCoordinatesProof";
 import { contractAddress, abi } from "../../utils/addressAndABI";
 import toast from "react-hot-toast";
 import { StreamrClient } from "streamr-client";
-import { updateAndPublish, updateTable } from "../../utils/helpers";
+import { updateAndPublish } from "../../utils/helpers";
 import Loader from "../Loader";
 
 const STREAM_ID = "0x2ea3bf6b653375fb8facfb67f19937e46840a7d4/lands/";
@@ -27,18 +27,19 @@ const landStatus = [
   },
 ];
 
-const landTypeObject = [
+export const landType = [
   {
-    text: "Premium",
-    color: "green",
+    text: "Alparius",
+    color: "#C94443",
   },
   {
-    text: "Prime",
-    color: "red",
+    text: "Betarius",
+    color: "#46436E",
   },
+
   {
-    text: "",
-    color: "#3B0073",
+    text: "Gammarius",
+    color: "#54A095",
   },
 ];
 
@@ -46,8 +47,6 @@ export default function Map({ lands, setLands }) {
   const streamrRef = useRef();
 
   const [currData, setCurrData] = useState({});
-  const [landType, setLandType] = useState();
-  const [premiumType, setPremiumType] = useState();
   const [loading, setLoading] = useState(false);
 
   const leftHide = () => {
@@ -138,17 +137,9 @@ export default function Map({ lands, setLands }) {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    background: landType === res ? "white" : "",
                     p: 1,
                     borderRadius: "8px",
                     cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    if (landType === res) {
-                      setLandType();
-                    } else {
-                      setLandType(res);
-                    }
                   }}
                 >
                   {res?.color && <div sx={{ mr: 1, color: res?.color }} />}
@@ -163,26 +154,19 @@ export default function Map({ lands, setLands }) {
               p={2}
               mt={4}
             >
-              {landTypeObject?.map((res, idx) => (
+              {landType?.map((res, idx) => (
                 <Box
+                  className="mb-2 text-gray-200"
                   key={idx}
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    background: premiumType === res ? "#252A34" : "",
+                    background: res.color,
                     p: 1,
                     borderRadius: "8px",
                     cursor: "pointer",
                   }}
-                  onClick={() => {
-                    if (premiumType === res) {
-                      setPremiumType();
-                    } else {
-                      setPremiumType(res);
-                    }
-                  }}
                 >
-                  {res?.color && <div sx={{ mr: 1, color: res?.color }} />}
                   <Typography variant="body2">{res?.text}</Typography>
                 </Box>
               ))}

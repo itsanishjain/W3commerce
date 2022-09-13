@@ -17,6 +17,7 @@
     "@uauth/js": "^2.3.0",
     "@xmtp/xmtp-js": "^6.1.0",
     "canvas": "^2.9.3",
+    "coingecko-api": "^1.0.10",
     "connectkit": "^0.0.2",
     "ethers": "^5.7.0",
     "keccak256": "^1.0.6",
