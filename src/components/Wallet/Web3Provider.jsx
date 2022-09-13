@@ -13,7 +13,7 @@ const client = createClient(
 const Web3Provider = ({ children }) => {
   return (
     <WagmiConfig client={client}>
-      <ConnectKitProvider>{children}</ConnectKitProvider>
+      <ConnectKitProvider mode="dark">{children}</ConnectKitProvider>
     </WagmiConfig>
   );
 };

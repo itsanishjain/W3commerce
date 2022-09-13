@@ -8,10 +8,11 @@ import { contractAddress, abi } from "../../utils/addressAndABI";
 import toast from "react-hot-toast";
 import { StreamrClient } from "streamr-client";
 import { updateAndPublish, updateTable } from "../../utils/helpers";
+import Loader from "../Loader";
 
 const STREAM_ID = "0x2ea3bf6b653375fb8facfb67f19937e46840a7d4/lands/";
 
-const landTypeArr = [
+const landStatus = [
   {
     text: "Sold",
     color: "#00FF47",
@@ -26,25 +27,28 @@ const landTypeArr = [
   },
 ];
 
-const premiumTypeArr = [
-  {
-    text: "Ultra Premium",
-    color: "#FFCBFF",
-  },
+const landTypeObject = [
   {
     text: "Premium",
-    color: "#AE61F7",
+    color: "green",
   },
   {
-    text: "Platinum",
+    text: "Prime",
+    color: "red",
+  },
+  {
+    text: "",
     color: "#3B0073",
   },
 ];
 
 export default function Map({ lands, setLands }) {
+  const streamrRef = useRef();
+
   const [currData, setCurrData] = useState({});
   const [landType, setLandType] = useState();
   const [premiumType, setPremiumType] = useState();
+  const [loading, setLoading] = useState(false);
 
   const leftHide = () => {
     const hide = document.getElementById("r-menu");
@@ -62,16 +66,21 @@ export default function Map({ lands, setLands }) {
   const landPrice = { 1: "0.001", 2: "0.002", 3: "0.003" };
   const { isConnected, address } = useAccount();
   const { data: signer } = useSigner();
+
+  // Contract init
   const contract = useContract({
     addressOrName: contractAddress,
     contractInterface: abi,
     signerOrProvider: signer,
   });
+
+  // Mint
   const mintLand = async (land) => {
-    // database and stremer code  to make land status pending
-    await updateAndPublish(land, 0, address, streamrRef);
+    // database and stremer code to make land status pending
 
     try {
+      setLoading(true);
+      await updateAndPublish(land, 0, address, streamrRef);
       await (
         await contract.mintLand(
           land.x.toString(),
@@ -89,18 +98,14 @@ export default function Map({ lands, setLands }) {
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");
-      await updateAndPublish(land, -1, "", streamrRef); // we need to only update
+      // await updateAndPublish(land, -1, "", streamrRef); // we need to only update
     }
+    setLoading(false);
   };
-
-  const streamrRef = useRef();
 
   useEffect(() => {
     streamrRef.current = new StreamrClient({
-      auth: {
-        privateKey: process.env.NEXT_PUBLIC_PK,
-        // ethereum: window.ethereum,
-      },
+      auth: { privateKey: process.env.NEXT_PUBLIC_PK },
     });
     streamrRef.current
       .subscribe(STREAM_ID, (content) => {
@@ -119,24 +124,21 @@ export default function Map({ lands, setLands }) {
   return (
     <Box>
       <Grid container pt={8}>
-        <Grid className="bg-green-500" item xl={2} lg={2} md={2} sm={2} xs={2}>
-          <Box
-            className=""
-            p={2}
-            sx={{ background: "#1C2128", overflowY: "auto", height: "93.2vh" }}
-          >
+        {/* LEFT */}
+        <Grid item xl={2} lg={2} md={2} sm={2} xs={2}>
+          <Box p={2} sx={{ overflowY: "auto", height: "93.2vh" }}>
             <Box
-              className="bg-red-500"
+              className="bg-orange-300"
               sx={{ background: "#343A43", borderRadius: "12px" }}
               p={2}
             >
-              {landTypeArr?.map((res, idx) => (
+              {landStatus?.map((res, idx) => (
                 <Box
                   key={idx}
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    background: landType === res ? "#252A34" : "",
+                    background: landType === res ? "white" : "",
                     p: 1,
                     borderRadius: "8px",
                     cursor: "pointer",
@@ -156,11 +158,12 @@ export default function Map({ lands, setLands }) {
             </Box>
 
             <Box
-              sx={{ background: "#343A43", borderRadius: "12px" }}
+              className="bg-orange-300"
+              sx={{ borderRadius: "12px" }}
               p={2}
               mt={4}
             >
-              {premiumTypeArr?.map((res, idx) => (
+              {landTypeObject?.map((res, idx) => (
                 <Box
                   key={idx}
                   sx={{
@@ -186,57 +189,59 @@ export default function Map({ lands, setLands }) {
             </Box>
           </Box>
         </Grid>
+
+        {/* CENTER */}
         <Grid item xl={7} lg={7} md={7} sm={7} xs={7} onClick={leftHide}>
           <MapCanvas lands={lands} setCurrData={setCurrData} />
         </Grid>
-        <Grid item xl={3} lg={3} md={3} sm={3} xs={3}>
-          <Box
-            p={2}
-            sx={{ background: "#1C2128", overflowY: "auto", height: "93.2vh" }}
-          >
-            {/* <ContractConnect data={currData} /> */}
 
+        {/* RIGHT */}
+        <Grid item xl={3} lg={3} md={3} sm={3} xs={3}>
+          <Box p={2} sx={{ overflowY: "auto", height: "93.2vh" }}>
             {Object.keys(currData)?.length > 0 && (
-              <div className="bg-blue-500">
+              <div className="bg-orange-300 rounded-md p-2 space-y-4">
                 <Box
                   display="flex"
                   alignItems="center"
                   justifyContent="space-between"
-                  mt={4}
-                  mb={2}
                 >
                   <Typography variant="h5">
                     {currData?.name?.split(" ")[0]}
                   </Typography>
-                  <Typography variant="body1" color="lightgreen">
-                    {currData?.price}
+                  <Typography variant="body1" color="">
+                    <span className="text-black">{currData?.price}</span>
                   </Typography>
                 </Box>
                 <Box>
-                  <Box mb={1}>
-                    <Typography variant="body2" color="red">
+                  <Box>
+                    <div className="mb-4 text-xl font-bold text-black">
                       Location
-                    </Typography>
+                    </div>
                   </Box>
-                  <Box display="flex" gap={1}>
-                    <div sx={{ color: "#72FF79" }} />
-                    <Typography
-                      variant="body1"
-                      color="lightgreen"
-                      sx={{ fontWeight: 600 }}
-                    >
-                      {currData?.x}, {currData?.y}
+                  <Box display="flex">
+                    <div sx={{ color: "red" }} />
+                    <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                      <span className="text-black">
+                        {currData?.x}, {currData?.y}
+                      </span>
                     </Typography>
                   </Box>
                 </Box>
                 {isConnected && (
                   <button
-                    className="p-4 bg-red-500 rounded"
+                    className="p-4 bg-orange-500 rounded w-full"
                     onClick={() => mintLand(currData)}
                   >
-                    {currData.status === -1 && "Mint"}
-                    {currData.status === 0 && "Minting"}
-                    {currData.status === 1 && "Minted"}
+                    {currData.status === -1 && (
+                      <span className="text-lg font-bold">Mint</span>
+                    )}
+                    {currData.status === 0 && (
+                      <span className="text-lg font-bold">Minting</span>
+                    )}
+                    {currData.status === 1 && (
+                      <span className="text-lg font-bold">Minted</span>
+                    )}
+                    {loading && <Loader />}
                   </button>
                 )}
               </div>

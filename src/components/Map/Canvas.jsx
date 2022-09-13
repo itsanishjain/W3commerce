@@ -47,12 +47,10 @@ const MapCanvas = ({ lands, setCurrData }) => {
     } else if (land === "PREMIUM LAND") {
       return "#f8cdfc";
     } else {
-      return "#8a1fae";
+      return "red";
     }
   };
   const width = 12;
-
-  //
 
   const LandTile = lands?.map((data, index) => {
     return (
@@ -76,7 +74,7 @@ const MapCanvas = ({ lands, setCurrData }) => {
   });
 
   return (
-    <div className="bg-pink-400">
+    <div className="bg-blue-300 rounded-md">
       <Stage
         width={(7 * window.innerWidth) / 12}
         height={(13.97 * window.innerHeight) / 15}
