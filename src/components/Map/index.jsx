@@ -12,11 +12,20 @@ import { contractAddress, abi } from "../../utils/addressAndABI";
 
 import Loader from "../Loader";
 import MapCanvas from "./Canvas";
+import LandTile from "./LandTile";
+
+import { Stage, Layer } from "react-konva";
 
 import { landStatus, landType, STREAM_ID } from "../../utils/consts";
 
 export default function Map({ lands, setLands }) {
   const streamrRef = useRef();
+
+  const [stage, setStage] = useState({
+    scale: 1,
+    x: 0,
+    y: 0,
+  });
 
   const [currData, setCurrData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -138,7 +147,7 @@ export default function Map({ lands, setLands }) {
             >
               {landType?.map((res, idx) => (
                 <Box
-                  className="mb-2 text-gray-200"
+                  className="mb-2 text-gray-100"
                   key={idx}
                   sx={{
                     display: "flex",
@@ -207,6 +216,41 @@ export default function Map({ lands, setLands }) {
                     {loading && <Loader />}
                   </button>
                 )}
+
+                <div className="bg-blue-300">
+                  <Stage
+                    width={(7 * window.innerWidth) / 12}
+                    height={(6.97 * window.innerHeight) / 15}
+                    scaleX={stage.scale}
+                    scaleY={stage.scale}
+                    x={stage.x}
+                    y={stage.y}
+                    draggable={true}
+                    dragBoundFunc={({ x, y }) => {
+                      if (Math.abs(x) <= 100 && Math.abs(y) > 100) {
+                        y = Math.sign(y) === 1 ? 100 : -100;
+                      }
+                      if (Math.abs(x) > 100 && Math.abs(y) <= 100) {
+                        x = Math.sign(x) === 1 ? 100 : -100;
+                      }
+                      if (Math.abs(x) > 100 && Math.abs(y) > 100) {
+                        x = Math.sign(x) === 1 ? 100 : -100;
+                        y = Math.sign(y) === 1 ? 100 : -100;
+                      }
+                      return { x, y };
+                    }}
+                  >
+                    <Layer>
+                      <LandTile
+                        data={currData}
+                        index={1}
+                        setCurrData={() => {}}
+                        eid={0}
+                        setId={() => {}}
+                      />
+                    </Layer>
+                  </Stage>
+                </div>
               </div>
             )}
           </Box>
