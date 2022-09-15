@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Stage, Layer, Rect } from "react-konva";
 
-import { landType } from ".";
+import { landType } from "../../utils/consts";
 
 const scaleBy = 1.1;
 

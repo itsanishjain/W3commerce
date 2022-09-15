@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 
 import { readTable } from "../src/utils/helpers";
 
-const Map = dynamic(() => import("../src/components/Map"), {
-  ssr: false,
-});
+const Map = dynamic(() => import("../src/components/Map"), { ssr: false });
 
 export default function Home() {
   const [lands, setLands] = useState([]);

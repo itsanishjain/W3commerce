@@ -1,47 +1,19 @@
 import { ethers } from "ethers";
-import { useEffect, useState, useRef } from "react";
-import { Box, Grid, Typography } from "@mui/material";
-import { useAccount, useContract, useSigner } from "wagmi";
-import MapCanvas from "./Canvas";
-import { getProof } from "../../utils/createCoordinatesProof";
-import { contractAddress, abi } from "../../utils/addressAndABI";
 import toast from "react-hot-toast";
+import CoinGecko from "coingecko-api";
 import { StreamrClient } from "streamr-client";
+import { Box, Grid, Typography } from "@mui/material";
+import { useEffect, useState, useRef } from "react";
+import { useAccount, useContract, useSigner } from "wagmi";
+
+import { getProof } from "../../utils/createCoordinatesProof";
 import { updateAndPublish } from "../../utils/helpers";
+import { contractAddress, abi } from "../../utils/addressAndABI";
+
 import Loader from "../Loader";
+import MapCanvas from "./Canvas";
 
-const STREAM_ID = "0x2ea3bf6b653375fb8facfb67f19937e46840a7d4/lands/";
-
-const landStatus = [
-  {
-    text: "Sold",
-    color: "#00FF47",
-  },
-  {
-    text: "Auction",
-    color: "#FAFF00",
-  },
-  {
-    text: "Sale",
-    color: "#FF0000",
-  },
-];
-
-export const landType = [
-  {
-    text: "Alparius",
-    color: "#C94443",
-  },
-  {
-    text: "Betarius",
-    color: "#46436E",
-  },
-
-  {
-    text: "Gammarius",
-    color: "#54A095",
-  },
-];
+import { landStatus, landType, STREAM_ID } from "../../utils/consts";
 
 export default function Map({ lands, setLands }) {
   const streamrRef = useRef();
@@ -76,6 +48,14 @@ export default function Map({ lands, setLands }) {
   // Mint
   const mintLand = async (land) => {
     // database and stremer code to make land status pending
+
+    // const CoinGeckoClient = new CoinGecko();
+    // let data = await CoinGeckoClient.coins.fetch("bitcoin", {});
+    // let data = await CoinGeckoClient.coins.all;
+
+    // console.log(data.data.tickers[0].converted_last["usd"]);
+
+    // return;
 
     try {
       setLoading(true);
@@ -189,9 +169,6 @@ export default function Map({ lands, setLands }) {
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <Typography variant="h5">
-                    {currData?.name?.split(" ")[0]}
-                  </Typography>
                   <Typography variant="body1" color="">
                     <span className="text-black">{currData?.price}</span>
                   </Typography>

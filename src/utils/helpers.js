@@ -50,7 +50,7 @@ export const readTable = async () => {
 export const updateTable = async (id, status, account = "") => {
   await tableland.siwe();
   await tableland.write(
-    `
+  `
     UPDATE ${TABLE_NAME} 
     SET status = ${status}, name = ${account} 
     WHERE id = ${id};
