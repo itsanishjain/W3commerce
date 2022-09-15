@@ -24,6 +24,7 @@
     "konva": "^8.3.12",
     "merkletreejs": "^0.2.32",
     "next": "12.2.5",
+    "nft.storage": "^7.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.3.0",

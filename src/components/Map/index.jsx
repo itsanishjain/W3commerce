@@ -47,6 +47,7 @@ export default function Map({ lands, setLands }) {
 
   // Mint
   const mintLand = async (land) => {
+    console.log({ land });
     // database and stremer code to make land status pending
 
     // const CoinGeckoClient = new CoinGecko();
@@ -60,6 +61,7 @@ export default function Map({ lands, setLands }) {
     try {
       setLoading(true);
       await updateAndPublish(land, 0, address, streamrRef);
+      return;
       await (
         await contract.mintLand(
           land.x.toString(),

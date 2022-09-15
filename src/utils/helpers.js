@@ -1,7 +1,7 @@
 import { connect } from "@tableland/sdk";
-import mapdata from "./mapdata.json";
+import { NFTStorage, File, Blob } from "nft.storage";
 
-import axios from "axios";
+import mapdata from "./mapdata.json";
 
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -47,14 +47,13 @@ export const readTable = async () => {
   }));
 };
 
+//  `UPDATE ${TABLE_NAME} SET status = ${status}, name = ${account} WHERE id = ${id};`
+
 export const updateTable = async (id, status, account = "") => {
   await tableland.siwe();
+  console.log(id, status, account);
   await tableland.write(
-  `
-    UPDATE ${TABLE_NAME} 
-    SET status = ${status}, name = ${account} 
-    WHERE id = ${id};
-  `
+    `UPDATE ${TABLE_NAME} SET status = 855 WHERE id = 178;`
   );
 };
 
@@ -70,4 +69,23 @@ export const updateAndPublish = async (
     status: newStatus,
     name: account,
   });
+};
+
+const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_NFT_DOT_STORAGE_API_KEY;
+
+const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
+export const nftDotStorage = async (img) => {
+  try {
+    const metadata = await client.store({
+      attributes: [],
+      description:
+        "A Contract on a IPFS represent that you Join DeadLand succesfully, and in Future you actually own a piece of land in real world where we all dead people come and make us alive ",
+      name: "Deadland",
+      image: img,
+    });
+    return metadata;
+  } catch (error) {
+    console.log("NFT.PORT UPLOAD ERROR", error);
+    return "ERROR_NFT_DOT_STORAGE";
+  }
 };
