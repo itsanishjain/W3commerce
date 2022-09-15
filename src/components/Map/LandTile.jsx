@@ -15,9 +15,7 @@ const getColor = (land) => {
 };
 const width = 12;
 
-const LandTile = ({ data, index, setCurrData,eid,setId }) => {
-  console.log(data);
-  // const [eid, setId] = useState(0);
+const LandTile = ({ data, index, setCurrData, eid, setId }) => {
   return (
     <Rect
       key={index}
@@ -33,6 +31,7 @@ const LandTile = ({ data, index, setCurrData,eid,setId }) => {
       onClick={() => {
         setId(index);
         setCurrData(data);
+        console.log({ data });
       }}
     />
   );

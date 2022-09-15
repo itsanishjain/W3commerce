@@ -221,28 +221,10 @@ export default function Map({ lands, setLands }) {
                   <Stage
                     width={(7 * window.innerWidth) / 12}
                     height={(6.97 * window.innerHeight) / 15}
-                    scaleX={stage.scale}
-                    scaleY={stage.scale}
-                    x={stage.x}
-                    y={stage.y}
-                    draggable={true}
-                    dragBoundFunc={({ x, y }) => {
-                      if (Math.abs(x) <= 100 && Math.abs(y) > 100) {
-                        y = Math.sign(y) === 1 ? 100 : -100;
-                      }
-                      if (Math.abs(x) > 100 && Math.abs(y) <= 100) {
-                        x = Math.sign(x) === 1 ? 100 : -100;
-                      }
-                      if (Math.abs(x) > 100 && Math.abs(y) > 100) {
-                        x = Math.sign(x) === 1 ? 100 : -100;
-                        y = Math.sign(y) === 1 ? 100 : -100;
-                      }
-                      return { x, y };
-                    }}
                   >
                     <Layer>
                       <LandTile
-                        data={currData}
+                        data={{ ...currData, x: -24, y: 1 }}
                         index={1}
                         setCurrData={() => {}}
                         eid={0}
@@ -259,3 +241,7 @@ export default function Map({ lands, setLands }) {
     </Box>
   );
 }
+
+// x [-29,-20]
+// y [20,1]
+// eg: -24,-18
