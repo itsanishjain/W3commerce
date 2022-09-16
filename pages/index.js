@@ -22,7 +22,7 @@ export default function Home() {
       <div className="absolute top-3 right-6">
         <ConnectWallet />
       </div>
-      {loading ? "loading...." : <Map lands={lands} setLands={setLands} />}
+      {/* {loading ? "loading...." : <Map lands={lands} setLands={setLands} />} */}
     </div>
   );
 }
