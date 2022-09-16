@@ -174,12 +174,12 @@ export default function Map({ lands, setLands }) {
 
         {/* CENTER */}
         <Grid item xl={7} lg={7} md={7} sm={7} xs={7} onClick={leftHide}>
-          <MapCanvas lands={lands} setCurrData={setCurrData} />
+          {/* <MapCanvas lands={lands} setCurrData={setCurrData} /> */}
         </Grid>
 
         {/* RIGHT */}
         <Grid item xl={3} lg={3} md={3} sm={3} xs={3}>
-          <Box p={2} sx={{ overflowY: "auto", height: "93.2vh" }}>
+          {/* <Box p={2} sx={{ overflowY: "auto", height: "93.2vh" }}>
             {Object.keys(currData)?.length > 0 && (
               <div className="bg-orange-300 rounded-md p-2 space-y-4">
                 <Box
@@ -244,7 +244,7 @@ export default function Map({ lands, setLands }) {
                 </div>
               </div>
             )}
-          </Box>
+          </Box> */}
         </Grid>
       </Grid>
     </Box>
