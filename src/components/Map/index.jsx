@@ -224,7 +224,7 @@ export default function Map({ lands, setLands }) {
                   >
                     <Layer>
                       <LandTile
-                        data={{ ...currData, x: -24, y: 1 }}
+                        data={currData}
                         index={1}
                         setCurrData={() => {}}
                         eid={0}

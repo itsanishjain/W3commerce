@@ -47,14 +47,26 @@ export const readTable = async () => {
   }));
 };
 
-//  `UPDATE ${TABLE_NAME} SET status = ${status}, name = ${account} WHERE id = ${id};`
-
 export const updateTable = async (id, status, account = "") => {
   await tableland.siwe();
   console.log(id, status, account);
   await tableland.write(
+    //  `UPDATE ${TABLE_NAME} SET status = ${status}, name = ${account} WHERE id = ${id};`
     `UPDATE ${TABLE_NAME} SET status = 855 WHERE id = 178;`
   );
+};
+
+// x =  [-29,-20]
+// y =  [20,1]
+
+export const getXY = (xi, yi) => {
+  let calX = xi;
+  let calY = yi;
+  if (xi < -29) calX = -29;
+  if (xi > -20) calX = -20;
+  if (yi < 1) calY = 1;
+  if (yi > 20) calY = 20;
+  return { calX, calY };
 };
 
 export const updateAndPublish = async (
