@@ -20,6 +20,7 @@
     "coingecko-api": "^1.0.10",
     "connectkit": "^0.0.2",
     "ethers": "^5.7.0",
+    "html-to-image": "^1.10.8",
     "keccak256": "^1.0.6",
     "konva": "^8.3.12",
     "merkletreejs": "^0.2.32",

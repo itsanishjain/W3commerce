@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import toast from "react-hot-toast";
 import CoinGecko from "coingecko-api";
+import * as htmlToImage from "html-to-image";
 import { StreamrClient } from "streamr-client";
 import { Box, Grid, Typography } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
@@ -20,9 +21,21 @@ import { landStatus, landType, STREAM_ID } from "../../utils/consts";
 
 export default function Map({ lands, setLands }) {
   const streamrRef = useRef();
+  const domEl = useRef();
 
   const [currData, setCurrData] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const downloadImage = async () => {
+    const dataUrl = await htmlToImage.toPng(domEl.current);
+    console.log(dataUrl);
+
+    // // download image
+    // const link = document.createElement('a');
+    // link.download = "html-to-img.png";
+    // link.href = dataUrl;
+    // link.click();
+  };
 
   const leftHide = () => {
     const hide = document.getElementById("r-menu");
@@ -211,7 +224,9 @@ export default function Map({ lands, setLands }) {
                   </button>
                 )}
 
-                <div className="bg-blue-300">
+                <button onClick={downloadImage}>Download Image</button>
+
+                <div className="bg-pink-300" id="domEl" ref={domEl}>
                   <Stage
                     width={(7 * window.innerWidth) / 12}
                     height={(7.97 * window.innerHeight) / 15}
