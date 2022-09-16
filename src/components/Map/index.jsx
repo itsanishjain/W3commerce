@@ -174,7 +174,7 @@ export default function Map({ lands, setLands }) {
 
         {/* CENTER */}
         <Grid item xl={7} lg={7} md={7} sm={7} xs={7} onClick={leftHide}>
-          {/* <MapCanvas lands={lands} setCurrData={setCurrData} /> */}
+          <MapCanvas lands={lands} setCurrData={setCurrData} />
         </Grid>
 
         {/* RIGHT */}
