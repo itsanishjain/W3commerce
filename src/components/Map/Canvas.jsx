@@ -6,6 +6,7 @@ import LandTile from "./LandTile";
 const scaleBy = 1.1;
 
 const MapCanvas = ({ lands, setCurrData }) => {
+  
   const [stage, setStage] = useState({
     scale: 1,
     x: 0,

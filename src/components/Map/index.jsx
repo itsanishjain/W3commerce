@@ -21,12 +21,6 @@ import { landStatus, landType, STREAM_ID } from "../../utils/consts";
 export default function Map({ lands, setLands }) {
   const streamrRef = useRef();
 
-  const [stage, setStage] = useState({
-    scale: 1,
-    x: 0,
-    y: 0,
-  });
-
   const [currData, setCurrData] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -220,7 +214,7 @@ export default function Map({ lands, setLands }) {
                 <div className="bg-blue-300">
                   <Stage
                     width={(7 * window.innerWidth) / 12}
-                    height={(6.97 * window.innerHeight) / 15}
+                    height={(7.97 * window.innerHeight) / 15}
                   >
                     <Layer>
                       <LandTile
@@ -241,7 +235,3 @@ export default function Map({ lands, setLands }) {
     </Box>
   );
 }
-
-// x [-29,-20]
-// y [20,1]
-// eg: -24,-18
