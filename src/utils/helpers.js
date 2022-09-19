@@ -1,7 +1,8 @@
 import { connect } from "@tableland/sdk";
-import { NFTStorage, File, Blob } from "nft.storage";
+import { data } from "autoprefixer";
+import { NFTStorage } from "nft.storage";
 
-import mapdata from "./mapdata.json";
+import product from "./product.json";
 
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -11,26 +12,29 @@ const tableland = connect({
   chain: "polygon-mumbai",
 });
 
-const TABLE_NAME = "_80001_1434";
+const TABLE_NAME = "_80001_2123";
 const STREAM_ID = "0x2ea3bf6b653375fb8facfb67f19937e46840a7d4/lands/";
 
 export const createTable = async () => {
   await tableland.siwe();
 
   const { name } = await tableland.create(
-    `id integer, name text, x integer, y integer, size integer, landType integer, status integer, primary key (id)`
+    `id integer, title text, image text, primary key (id)`
   );
 
-  // Insert a row into the table
+  console.log(name);
+  console.log(product);
 
-  for (let i = 0; i < mapdata.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     await tableland.write(
-      `INSERT INTO ${name} (id, name, x, y, size, landType, status) VALUES (${i}, '',${mapdata[i].x},${mapdata[i].y},${mapdata[i].size},${mapdata[i].landType}, ${mapdata[i].status});`
+      `INSERT INTO ${name} (id, title) VALUES (1,'backpack laptop');`
     );
     await timer(0);
   }
   // Perform a read query, requesting all rows from the table
+
   const readRes = await tableland.read(`SELECT * FROM ${name};`);
+
   console.log(readRes);
 };
 

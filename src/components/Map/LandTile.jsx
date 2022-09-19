@@ -1,5 +1,4 @@
 import { Rect } from "react-konva";
-import { useState } from "react";
 
 import { landType } from "../../utils/consts";
 import { getXY } from "../../utils/helpers";
@@ -38,7 +37,6 @@ const LandTile = ({ data, index, setCurrData, eid, setId }) => {
           y: calY,
           size: data.size > 3 ? data.size / 4 : data.size,
         });
-        console.log({ data });
       }}
     />
   );
