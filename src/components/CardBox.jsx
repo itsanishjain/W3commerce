@@ -10,14 +10,36 @@ import { landStatus, landType, STREAM_ID } from "../utils/consts";
 import { contractAddress, abi } from "../utils/addressAndABI";
 import { createTable, nftDotStorage, updateAndPublish } from "../utils/helpers";
 
+import * as htmlToImage from "html-to-image";
+
 const CardBox = ({ products, setProducts }) => {
   const streamrRef = useRef();
+  const domEl = useRef();
 
   const { isConnected, address } = useAccount();
   const { data: signer } = useSigner();
+  const [quantity, setQuantity] = useState(1);
   const [currData, setCurrData] = useState();
   const [currId, setCurrId] = useState();
   const [loading, setLoading] = useState(false);
+
+  // Handle input
+  const handleInput = (currentValue) => {
+    let v = parseInt(currentValue);
+    if (isNaN(v)) setQuantity(1);
+    else if (v > 10) setQuantity(10);
+    else if (v < 1) setQuantity(1);
+    else setQuantity(v);
+  };
+
+  const downloadImage = async () => {
+    const dataUrl = await htmlToImage.toPng(domEl.current);
+    console.log(dataUrl);
+    const blob = new Blob([JSON.stringify(dataUrl, null, 2)], {
+      type: "application/json",
+    });
+    await nftDotStorage(blob);
+  };
 
   // Contract init
   const contract = useContract({
@@ -33,7 +55,7 @@ const CardBox = ({ products, setProducts }) => {
     try {
       setLoading(true);
       // await updateAndPublish(product, 0, address, streamrRef);
-      await nftDotStorage(product.image);
+      await downloadImage();
       return;
 
       await (await contract.mint(address, product.id, 1, "0x")).wait();
@@ -67,7 +89,7 @@ const CardBox = ({ products, setProducts }) => {
   }, [setProducts]);
 
   return (
-    <div className="flex rounded-md">
+    <div className="flex rounded-md mt-8">
       <div
         className="text-white max-w-3xl mx-auto grid 
     grid-row-1 gap-8 p-2 md:grid-cols-3 md:gap-4"
@@ -75,7 +97,7 @@ const CardBox = ({ products, setProducts }) => {
         {products.map((item, index) => (
           <div
             key={index}
-            className="cursor-pointer text-center"
+            className="cursor-pointer text-center bg-white rounded-md p-4"
             onClick={() => {
               setCurrData(item);
               console.log(item);
@@ -87,13 +109,17 @@ const CardBox = ({ products, setProducts }) => {
               width={250}
               alt={`image_${item.id.tokenId}`}
             />
-            <div className="text-md font-bold">{item.name}</div>
+            <div className="text-md font-bold text-black">
+              {item.name == "new title"
+                ? "Backpack, Fits 15 Laptops"
+                : item.name}
+            </div>
           </div>
         ))}
       </div>
 
       {currData && (
-        <div className="cardBox rounded-md p-2 space-y-4 w-80 h-64 m-4">
+        <div className="cardBox rounded-md p-2 space-y-4 w-80 m-4">
           <div className="bg-orange-300 rounded-md p-2 space-y-4">
             <div
               display="flex"
@@ -130,6 +156,22 @@ const CardBox = ({ products, setProducts }) => {
               </button>
             </div>
           )}
+
+          <input
+            className="inputBox"
+            type="number"
+            value={quantity}
+            onChange={(e) => handleInput(e.target.value)}
+          />
+
+          <div id="domEl" ref={domEl} className="w-full text-center">
+            <Image
+              src={`https://fakestoreapi.com/img/${currData.x}`}
+              height={250}
+              width={250}
+              alt={`image_${currData.id}`}
+            />
+          </div>
         </div>
       )}
     </div>

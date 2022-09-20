@@ -3,35 +3,28 @@
 @tailwind utilities;
 
 body {
-  background: #4ecdc4; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #556270,
-    #4ecdc4
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #556270, #4ecdc4);
+  background: #fff;
+  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
 }
 
 .cardBox {
-  background: #ff7e5f; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #feb47b,
-    #ff7e5f
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #feb47b,
-    #ff7e5f
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-color: white;
 }
 
 .loader {
-  background: #4ecdc4; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #556270,
-    #4ecdc4
-  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: #4ecdc4;
+  background: -webkit-linear-gradient(to right, #556270, #4ecdc4);
   background: linear-gradient(to right, #556270, #4ecdc4);
+}
+
+.inputBox {
+  background-color: whitesmoke;
+  max-width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 10px;
 }
