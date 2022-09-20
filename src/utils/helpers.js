@@ -5,6 +5,18 @@ import data from "./product.json";
 
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
+export const truncateAddress = (address) => {
+  if (!address) return "No Account";
+
+  const match = address.match(
+    /^(0x[a-zA-Z0-9]{2})[a-zA-Z0-9]+([a-zA-Z0-9]{2})$/
+  );
+
+  if (!match) return address;
+
+  return `${match[1]}…${match[2]}`;
+};
+
 // Establish a connection
 const tableland = connect({
   network: "testnet",
@@ -36,12 +48,14 @@ export const createTable = async () => {
 
 export const readTable = async () => {
   const readRes = await tableland.read(`SELECT * FROM ${TABLE_NAME};`);
-  console.log(readRes);
-  return readRes.rows.map((item) => ({
-    id: item[0],
-    name: item[1],
-    x: item[2],
-  }));
+  return readRes;
+
+  // return [];
+  // return readRes.map((item) => ({
+  //   id: item[0],
+  //   name: item[1],
+  //   x: item[2],
+  // }));
 };
 
 export const updateTable = async (id, status, account = "") => {

@@ -1,23 +1,24 @@
 import Image from "next/image";
 import Loader from "./Loader";
-import { useState, useEffect, useRef } from "react";
-import { useAccount, useContract, useSigner } from "wagmi";
+import { useState, useEffect, useRef, useContext } from "react";
 import toast from "react-hot-toast";
 
 import { StreamrClient } from "streamr-client";
 
-import { landStatus, landType, STREAM_ID } from "../utils/consts";
+import { STREAM_ID } from "../utils/consts";
 import { contractAddress, abi } from "../utils/addressAndABI";
-import { createTable, nftDotStorage, updateAndPublish } from "../utils/helpers";
+import { nftDotStorage, updateAndPublish } from "../utils/helpers";
 
 import * as htmlToImage from "html-to-image";
 
+import { UserContext } from "../context/UserContext";
+
 const CardBox = ({ products, setProducts }) => {
+  const { isLoggedIn } = useContext(UserContext);
+
   const streamrRef = useRef();
   const domEl = useRef();
 
-  const { isConnected, address } = useAccount();
-  const { data: signer } = useSigner();
   const [quantity, setQuantity] = useState(1);
   const [currData, setCurrData] = useState();
   const [currId, setCurrId] = useState();
@@ -42,11 +43,11 @@ const CardBox = ({ products, setProducts }) => {
   };
 
   // Contract init
-  const contract = useContract({
-    addressOrName: contractAddress,
-    contractInterface: abi,
-    signerOrProvider: signer,
-  });
+  // const contract = useContract({
+  //   addressOrName: contractAddress,
+  //   contractInterface: abi,
+  //   signerOrProvider: signer,
+  // });
 
   // Mint
   const mintProduct = async (product) => {
@@ -110,9 +111,9 @@ const CardBox = ({ products, setProducts }) => {
               alt={`image_${item.id.tokenId}`}
             />
             <div className="text-md font-bold text-black">
-              {item.name == "new title"
+              {item.title == "new title"
                 ? "Backpack, Fits 15 Laptops"
-                : item.name}
+                : item.title}
             </div>
           </div>
         ))}
@@ -127,14 +128,18 @@ const CardBox = ({ products, setProducts }) => {
               justifyContent="space-between"
             >
               <div variant="body1" color="">
-                <div className="text-black">{currData?.name}</div>
+                <div className="text-black">
+                  {currData.title == "new title"
+                    ? "Backpack, Fits 15 Laptops"
+                    : currData.title}
+                </div>
               </div>
               <div variant="body1" color="">
                 <div className="text-black">{currData?.user}</div>
               </div>
             </div>
           </div>
-          {isConnected && (
+          {isLoggedIn && (
             <div>
               <button
                 className="p-4 bg-orange-500 rounded w-full"
