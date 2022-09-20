@@ -54,10 +54,9 @@ export const readTable = async () => {
 export const updateTable = async (id, status, account = "") => {
   await tableland.siwe();
   console.log(id, status, account);
-  await tableland.write(
-    //  `UPDATE ${TABLE_NAME} SET status = ${status}, name = ${account} WHERE id = ${id};`
-    `UPDATE ${TABLE_NAME} SET status = 855 WHERE id = 178;`
-  );
+  await tableland.write(`GRANT update on "_80001_2123" to '${account}' `);
+  await tableland.write(`UPDATE "_80001_2123" SET status = 100 WHERE id = 1;`);
+  console.log("Table updated");
 };
 
 // x =  [-29,-20]
@@ -74,16 +73,16 @@ export const getXY = (xi, yi) => {
 };
 
 export const updateAndPublish = async (
-  land,
+  product,
   newStatus,
   account,
   streamrRef
 ) => {
-  await updateTable(land.id, newStatus, account);
+  await updateTable(product.id, newStatus, account);
   await streamrRef.current.publish(STREAM_ID, {
-    ...land,
+    ...product,
     status: newStatus,
-    name: account,
+    user: account,
   });
 };
 

@@ -1,33 +1,28 @@
-import dynamic from "next/dynamic";
 import ConnectWallet from "../src/components/Wallet/ConnectWallet";
 import { useEffect, useState } from "react";
 
-import { readTable, createTable } from "../src/utils/helpers";
+import Loader from "../src/components/Loader";
+import CardBox from "../src/components/CardBox";
 
-const Map = dynamic(() => import("../src/components/Map"), { ssr: false });
+import { readTable } from "../src/utils/helpers";
 
 export default function Home() {
-  const [lands, setLands] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     readTable().then((res) => {
-      setLands(res);
+      setProducts(res);
       setLoading(false);
     });
   }, []);
 
-  console.log(lands);
-
   return (
     <div className="">
-      <div className="absolute top-3 right-6">
+      <div className="p-2">
         <ConnectWallet />
       </div>
-      <button className="bg-red-500" onClick={createTable}>
-        CREATE
-      </button>
-      {/* {loading ? "loading...." : <Map lands={lands} setLands={setLands} />} */}
+      {loading ? <Loader /> : <CardBox products={products} setProducts={setProducts} />}
     </div>
   );
 }
