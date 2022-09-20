@@ -3,7 +3,6 @@ import Loader from "./Loader";
 import { useState, useEffect, useRef } from "react";
 import { useAccount, useContract, useSigner } from "wagmi";
 import toast from "react-hot-toast";
-import { Box, Grid, Typography } from "@mui/material";
 
 import { StreamrClient } from "streamr-client";
 
@@ -96,18 +95,18 @@ const CardBox = ({ products, setProducts }) => {
       {currData && (
         <div className="cardBox rounded-md p-2 space-y-4 w-80 h-64 m-4">
           <div className="bg-orange-300 rounded-md p-2 space-y-4">
-            <Box
+            <div
               display="flex"
               alignItems="center"
               justifyContent="space-between"
             >
-              <Typography variant="body1" color="">
+              <div variant="body1" color="">
                 <div className="text-black">{currData?.name}</div>
-              </Typography>
-              <Typography variant="body1" color="">
+              </div>
+              <div variant="body1" color="">
                 <div className="text-black">{currData?.user}</div>
-              </Typography>
-            </Box>
+              </div>
+            </div>
           </div>
           {isConnected && (
             <div>
