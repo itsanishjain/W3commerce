@@ -1,8 +1,7 @@
 import { connect } from "@tableland/sdk";
-import { data } from "autoprefixer";
 import { NFTStorage } from "nft.storage";
 
-import product from "./product.json";
+import data from "./product.json";
 
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -19,15 +18,12 @@ export const createTable = async () => {
   await tableland.siwe();
 
   const { name } = await tableland.create(
-    `id integer, title text, image text, primary key (id)`
+    `id integer, title text, image text, status integer primary key (id)`
   );
-
-  console.log(name);
-  console.log(product);
 
   for (let i = 0; i < data.length; i++) {
     await tableland.write(
-      `INSERT INTO ${name} (id, title) VALUES (1,'backpack laptop');`
+      `INSERT INTO "${name}" (id, title, image, status) VALUES (${data[i].id},'${data[i].title}','${data[i].image}',-1);`
     );
     await timer(0);
   }
@@ -40,14 +36,11 @@ export const createTable = async () => {
 
 export const readTable = async () => {
   const readRes = await tableland.read(`SELECT * FROM ${TABLE_NAME};`);
+  console.log(readRes);
   return readRes.rows.map((item) => ({
     id: item[0],
     name: item[1],
     x: item[2],
-    y: item[3],
-    size: item[4],
-    landType: item[5],
-    status: item[6],
   }));
 };
 
@@ -55,21 +48,6 @@ export const updateTable = async (id, status, account = "") => {
   await tableland.siwe();
   console.log(id, status, account);
   await tableland.write(`GRANT update on "_80001_2123" to '${account}' `);
-  await tableland.write(`UPDATE "_80001_2123" SET status = 100 WHERE id = 1;`);
-  console.log("Table updated");
-};
-
-// x =  [-29,-20]
-// y =  [20,1]
-
-export const getXY = (xi, yi) => {
-  let calX = xi;
-  let calY = yi;
-  if (xi < -29) calX = -29;
-  if (xi > -20) calX = -20;
-  if (yi < 1) calY = 1;
-  if (yi > 20) calY = 20;
-  return { calX, calY };
 };
 
 export const updateAndPublish = async (

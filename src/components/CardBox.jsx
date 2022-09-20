@@ -9,7 +9,7 @@ import { StreamrClient } from "streamr-client";
 
 import { landStatus, landType, STREAM_ID } from "../utils/consts";
 import { contractAddress, abi } from "../utils/addressAndABI";
-import { updateAndPublish } from "../utils/helpers";
+import { createTable, updateAndPublish } from "../utils/helpers";
 
 const CardBox = ({ products, setProducts }) => {
   const streamrRef = useRef();
@@ -33,7 +33,8 @@ const CardBox = ({ products, setProducts }) => {
 
     try {
       setLoading(true);
-      await updateAndPublish(product, 0, address, streamrRef);
+      await createTable();
+      // await updateAndPublish(product, 0, address, streamrRef);
       return;
 
       await (
