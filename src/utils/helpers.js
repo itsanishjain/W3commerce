@@ -76,6 +76,7 @@ export const nftDotStorage = async (img) => {
       name: "Deadland",
       image: img,
     });
+    console.log(metadata);
     return metadata;
   } catch (error) {
     console.log("NFT.PORT UPLOAD ERROR", error);

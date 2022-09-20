@@ -9,7 +9,7 @@ import { StreamrClient } from "streamr-client";
 
 import { landStatus, landType, STREAM_ID } from "../utils/consts";
 import { contractAddress, abi } from "../utils/addressAndABI";
-import { createTable, updateAndPublish } from "../utils/helpers";
+import { createTable, nftDotStorage, updateAndPublish } from "../utils/helpers";
 
 const CardBox = ({ products, setProducts }) => {
   const streamrRef = useRef();
@@ -33,21 +33,11 @@ const CardBox = ({ products, setProducts }) => {
 
     try {
       setLoading(true);
-      await createTable();
       // await updateAndPublish(product, 0, address, streamrRef);
+      await nftDotStorage(product.image);
       return;
 
-      await (
-        await contract.mintProduct(
-          land.x.toString(),
-          land.y.toString(),
-          land.landType,
-          getProof(`${land.x},${land.y}:${land.landType}`),
-          {
-            value: ethers.utils.parseEther(landPrice[land.landType]),
-          }
-        )
-      ).wait();
+      await (await contract.mint(address, product.id, 1, "0x")).wait();
       // stremer code and database to make land status minted
       await updateAndPublish(land, 1, address, streamrRef);
       toast.success("Successfully Minted");
@@ -81,7 +71,7 @@ const CardBox = ({ products, setProducts }) => {
     <div className="flex rounded-md">
       <div
         className="text-white max-w-3xl mx-auto grid 
-    grid-row-1 gap-8 p-2 md:grid-cols-2 md:gap-4"
+    grid-row-1 gap-8 p-2 md:grid-cols-3 md:gap-4"
       >
         {products.map((item, index) => (
           <div
@@ -94,7 +84,7 @@ const CardBox = ({ products, setProducts }) => {
           >
             <Image
               src={`https://fakestoreapi.com/img/${item.x}`}
-              height={200}
+              height={250}
               width={250}
               alt={`image_${item.id.tokenId}`}
             />
@@ -104,7 +94,7 @@ const CardBox = ({ products, setProducts }) => {
       </div>
 
       {currData && (
-        <div className="bg-orange-300 rounded-md p-2 space-y-4 w-80 h-64 m-4">
+        <div className="cardBox rounded-md p-2 space-y-4 w-80 h-64 m-4">
           <div className="bg-orange-300 rounded-md p-2 space-y-4">
             <Box
               display="flex"
@@ -120,24 +110,26 @@ const CardBox = ({ products, setProducts }) => {
             </Box>
           </div>
           {isConnected && (
-            <button
-              className="p-4 bg-orange-500 rounded w-full"
-              onClick={() => {
-                mintProduct(currData);
-                setCurrId(currData.id);
-              }}
-            >
-              {currData.status === undefined && (
-                <div className="text-lg font-bold">Mint</div>
-              )}
-              {currData.status === 0 && (
-                <div className="text-lg font-bold">Minting</div>
-              )}
-              {currData.status === 1 && (
-                <div className="text-lg font-bold">Minted</div>
-              )}
-              {currData.id == currId && loading && <Loader />}
-            </button>
+            <div>
+              <button
+                className="p-4 bg-orange-500 rounded w-full"
+                onClick={() => {
+                  mintProduct(currData);
+                  setCurrId(currData.id);
+                }}
+              >
+                {currData.status === undefined && (
+                  <div className="text-lg font-bold">Mint</div>
+                )}
+                {currData.status === 0 && (
+                  <div className="text-lg font-bold">Minting</div>
+                )}
+                {currData.status === 1 && (
+                  <div className="text-lg font-bold">Minted</div>
+                )}
+                {currData.id == currId && loading && <Loader />}
+              </button>
+            </div>
           )}
         </div>
       )}

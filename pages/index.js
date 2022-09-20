@@ -19,10 +19,17 @@ export default function Home() {
 
   return (
     <div className="">
-      <div className="p-2">
+      <div className="p-2 text-center">
         <ConnectWallet />
+        <span className="p-3 text-5xl text-center font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-red-600">
+          W3Commerce
+        </span>
       </div>
-      {loading ? <Loader /> : <CardBox products={products} setProducts={setProducts} />}
+      {loading ? (
+        <Loader />
+      ) : (
+        <CardBox products={products} setProducts={setProducts} />
+      )}
     </div>
   );
 }
