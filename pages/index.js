@@ -1,17 +1,19 @@
-// import ConnectWallet from "../src/components/Wallet/ConnectWallet";
 import { useEffect, useState, useContext } from "react";
 
 import Loader from "../src/components/Loader";
 import CardBox from "../src/components/CardBox";
 
 import { readTable } from "../src/utils/helpers";
+import WalletModal from "../src/components/WalletModal";
+import Button from "../src/components/Button";
 
-import { UserContext } from "../src/context/UserContext";
-import Web3ReactWallet from "../src/components/Wallet/Web3ReactWallet";
+
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   useEffect(() => {
     console.log("Index useEffect running...............");
@@ -39,7 +41,9 @@ export default function Home() {
   return (
     <div className="">
       <div className="p-2 text-center">
-        <Web3ReactWallet />
+        {isModalOpen && <WalletModal setIsModalOpen={setIsModalOpen} />}
+
+        <Button text={"Connect Wallet"} onClick={() => setIsModalOpen(true)} />
         <span className="p-3 text-5xl text-center font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-red-600">
           W3Commerce
         </span>
