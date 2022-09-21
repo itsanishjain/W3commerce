@@ -1,10 +1,11 @@
-import React, { createContext, useState, useEffect } from "react";
+import { connect } from "@tableland/sdk";
 import { useWeb3React } from "@web3-react/core";
+import { createContext, useState, useEffect } from "react";
 
 import { connectors } from "../utils/connectors";
-import Loader from "../components/Loader";
+import { TABLE_NAME } from "../utils/consts";
 
-import { connect } from "@tableland/sdk";
+import RocketLoader from "../components/RocketLoader";
 
 export const UserContext = createContext();
 
@@ -14,10 +15,7 @@ const tableland = connect({
   chain: "polygon-mumbai",
 });
 
-const TABLE_NAME = "_80001_2123";
-
 export const readTable = async () => {
-  console.log({ tableland });
   const readRes = await tableland.read(`SELECT * FROM ${TABLE_NAME};`);
   return readRes.map((item) => ({
     id: item[0],
@@ -37,7 +35,6 @@ export const UserContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("User useEffect running...............")
     activate(connectors[localStorage.getItem("provider")]).then(() => {
       setIsLoading(false);
     });
@@ -55,7 +52,7 @@ export const UserContextProvider = ({ children }) => {
         isLoggedIn: !!account,
       }}
     >
-      {isLoading ? "loading................" : children}
+      {isLoading ? <RocketLoader /> : children}
     </UserContext.Provider>
   );
 };

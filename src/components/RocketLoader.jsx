@@ -21,7 +21,6 @@ const RocketLoader = () => {
         <span></span>
         <span></span>
       </div>
-      <div className={styles.h1}>Redirecting</div>
     </div>
   );
 };

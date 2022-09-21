@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 
+import Button from "../src/components/Button";
 import Loader from "../src/components/Loader";
 import CardBox from "../src/components/CardBox";
+import WalletModal from "../src/components/WalletModal";
 
 import { readTable } from "../src/utils/helpers";
-import WalletModal from "../src/components/WalletModal";
-import Button from "../src/components/Button";
-import RocketLoader from "../src/components/RocketLoader";
 
 const MarketPlace = () => {
   const [products, setProducts] = useState([]);
@@ -31,22 +30,22 @@ const MarketPlace = () => {
   }, []);
 
   return (
-    // <div className="">
-    //   <div className="p-2 text-center">
-    //     {isModalOpen && <WalletModal setIsModalOpen={setIsModalOpen} />}
-
-    //     <Button text={"Connect Wallet"} onClick={() => setIsModalOpen(true)} />
-    //     <span className="p-3 text-5xl text-center font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-red-600">
-    //       W3Commerce
-    //     </span>
-    //   </div>
-    //   {loading ? (
-    //     <Loader />
-    //   ) : (
-    //     <CardBox products={products} setProducts={setProducts} />
-    //   )}
-    // </div>
-    <RocketLoader />
+    <div className="">
+      <div className="p-2 text-center">
+        {isModalOpen && <WalletModal setIsModalOpen={setIsModalOpen} />}
+        <div className="absolute top-2 left-2 w-64">
+          <Button
+            text={"Connect Wallet"}
+            onClick={() => setIsModalOpen(true)}
+          />
+        </div>
+      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <CardBox products={products} setProducts={setProducts} />
+      )}
+    </div>
   );
 };
 

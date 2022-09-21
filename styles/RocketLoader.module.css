@@ -1,17 +1,5 @@
 /* Rocket Loader */
 
-/* @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
-.body {
-  background-color: #f1c40f;
-  overflow: hidden;
-} */
-
-.main {
-  overflow: hidden;
-  background-color: red;
-  
-}
-
 .h1 {
   position: absolute;
   font-family: "Open Sans";
