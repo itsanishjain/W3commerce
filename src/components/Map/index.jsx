@@ -125,7 +125,7 @@ export default function Map({ lands, setLands }) {
         <Grid item xl={2} lg={2} md={2} sm={2} xs={2}>
           <Box p={2} sx={{ overflowY: "auto", height: "93.2vh" }}>
             <Box
-              className="bg-orange-300"
+              className="bg-yellow-300"
               sx={{ background: "#343A43", borderRadius: "12px" }}
               p={2}
             >
@@ -147,7 +147,7 @@ export default function Map({ lands, setLands }) {
             </Box>
 
             <Box
-              className="bg-orange-300"
+              className="bg-yellow-300"
               sx={{ borderRadius: "12px" }}
               p={2}
               mt={4}
@@ -181,7 +181,7 @@ export default function Map({ lands, setLands }) {
         {/* <Grid item xl={3} lg={3} md={3} sm={3} xs={3}>
           <Box p={2} sx={{ overflowY: "auto", height: "93.2vh" }}>
             {Object.keys(currData)?.length > 0 && (
-              <div className="bg-orange-300 rounded-md p-2 space-y-4">
+              <div className="bg-yellow-300 rounded-md p-2 space-y-4">
                 <Box
                   display="flex"
                   alignItems="center"
@@ -208,7 +208,7 @@ export default function Map({ lands, setLands }) {
                 </Box>
                 {isConnected && (
                   <button
-                    className="p-4 bg-orange-500 rounded w-full"
+                    className="p-4 bg-yellow-500 rounded w-full"
                     onClick={() => mintLand(currData)}
                   >
                     {currData.status === -1 && (

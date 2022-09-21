@@ -124,7 +124,7 @@ const CardBox = ({ products, setProducts }) => {
       {/* LEFT */}
       {currData && (
         <div className="cardBox rounded-md p-2 space-y-4 w-80 m-4">
-          <div className="bg-orange-300 rounded-md p-2 space-y-4">
+          <div className="bg-yellow-300 rounded-md p-2 space-y-4">
             <div className="flex justify-bwtween items-center">
               <div variant="body1" color="">
                 <div className="text-black">
@@ -147,7 +147,7 @@ const CardBox = ({ products, setProducts }) => {
               </div>
 
               <button
-                className="p-4 bg-orange-500 rounded w-full"
+                className="p-4 bg-yellow-500 rounded w-full"
                 onClick={() => {
                   mintProduct(currData);
                 }}
