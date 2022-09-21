@@ -19,8 +19,13 @@
 - Figure out the way to broadcast how many people are minting a products using streamr [DONE]
 - Add mint function [DONE]
 - If 2nd point works add price for minting [DONE]
-- Add landing page
+- Add landing page [DONE]
+
+  - Theame color
+  - primary color
+
 - Fix UI
+- Add proper content
 
 # Verified Contract
 

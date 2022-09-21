@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-  background: #fff;
-  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);
-  background: linear-gradient(to right, #feb47b, #ff7e5f);
+  background: #1f2129;
+  /* background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);
+  background: linear-gradient(to right, #feb47b, #ff7e5f); */
 }
 
 .cardBox {
