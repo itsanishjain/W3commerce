@@ -70,7 +70,7 @@ const UnstoppableDomain = () => {
 
   return (
     <button
-      className="text-lg font-medium p-1 bg-pink-400 rounded p-2"
+      className="text-lg font-medium p-1 bg-yellow-400 rounded p-2"
       onClick={handleLogin}
     >
       Login with unstoppable

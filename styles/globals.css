@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-  background: #1f2129;
+  background-image: url("https://uploads-ssl.webflow.com/61596bfe0d5930582df2d25b/6162a711dd9e82b6e1859e3c_banner-poster-00001.jpg");
+  /* background: #1f2129; */
   /* background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);
   background: linear-gradient(to right, #feb47b, #ff7e5f); */
 }
@@ -27,4 +28,97 @@ body {
   font-size: 1.5rem;
   text-align: center;
   padding: 10px;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+::selection {
+  background: #eeae07; /* WebKit/Blink Browsers */
+  color: black;
+}
+::-moz-selection {
+  background: #eeae07; /* Gecko Browsers */
+  color: black;
+}
+
+.cursor {
+  display: none;
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background-size: cover;
+  background-position: center;
+  image-rendering: -webkit-optimize-contrast;
+  transform: translateY(-100%);
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 4em;
+  font-weight: 900;
+}
+
+p {
+  font-size: 1.5em;
+  font-weight: 300;
+}
+
+.spaced {
+  letter-spacing: 0.3em;
+}
+
+.heading {
+  margin-top: 0.5em;
+  margin-bottom: 2em;
+}
+
+.content-wrapper {
+  padding: 3em;
+  text-align: center;
+}
+
+.logo {
+  width: 250px;
+}
+
+.button {
+  font-size: 1.5em;
+  font-weight: 700;
+  position: relative;
+  color: black;
+  color: #000000;
+  margin-top: 3em;
+  display: inline-block;
+  background-color: #eeae07;
+  padding: 0.5em 0.7em;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.button:hover {
+  background-color: white;
+}
+
+.button span,
+.cursor {
+  pointer-events: none;
 }

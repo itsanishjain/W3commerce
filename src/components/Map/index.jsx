@@ -226,7 +226,7 @@ export default function Map({ lands, setLands }) {
 
                 <button onClick={downloadImage}>Download Image</button>
 
-                <div className="bg-pink-300" id="domEl" ref={domEl}>
+                <div className="bg-yellow-300" id="domEl" ref={domEl}>
                   <Stage
                     width={(7 * window.innerWidth) / 12}
                     height={(7.97 * window.innerHeight) / 15}

@@ -26,7 +26,14 @@
 
 - Fix UI
 - Add proper content
+- Clean up
 
 # Verified Contract
 
 `https://mumbai.polygonscan.com/address/0xccA1549cF515C2319fc5ba95b5b9b6b12Ca7A91d`
+
+# Resources
+
+- https://medium.muz.li/top-30-most-captivating-preloaders-for-your-website-95ed1beff99d
+
+- https://www.veed.io/

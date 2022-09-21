@@ -147,7 +147,9 @@ const CardBox = ({ products, setProducts }) => {
           {isLoggedIn && (
             <div className="space-y-4">
               <div className="flex justify-center items-center">
-                <span>Live users: {[...new Set(currUsers)].length}</span>
+                <span className="text-black">
+                  Live users: {[...new Set(currUsers)].length}
+                </span>
                 <span className="flex h-3 w-3 ml-2">
                   <span className="animate-ping inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                 </span>
