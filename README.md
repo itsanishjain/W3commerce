@@ -1,7 +1,15 @@
+# Protocols
+
+- Tableland
+- Streamr
+- Unstoppable Domain
+- IPFS
+- Valist
+
 # TODO
 
-- Update smart contract to make it work for trello
-- Fix tableland update function
-- Try to solve stream publish "why it is not broadcasting the events"
-- Show sale or sold when clicking on a land tile
--  
+- Figure out the way to broadcast how many people are minting a products using streamr [DONE]
+- Add mint function
+- If 2nd point works add price for minting
+- Add landing page
+- Fix UI

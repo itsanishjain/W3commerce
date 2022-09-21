@@ -14,7 +14,7 @@ import * as htmlToImage from "html-to-image";
 import { UserContext } from "../context/UserContext";
 
 const CardBox = ({ products, setProducts }) => {
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, account } = useContext(UserContext);
 
   const streamrRef = useRef();
   const domEl = useRef();
@@ -23,6 +23,12 @@ const CardBox = ({ products, setProducts }) => {
   const [currData, setCurrData] = useState();
   const [currId, setCurrId] = useState();
   const [loading, setLoading] = useState(false);
+
+  const [currUsers, setCurrUsers] = useState([]);
+
+  function isUnique(value, index, array) {
+    return array.indexOf(value) === array.lastIndexOf(value);
+  }
 
   // Handle input
   const handleInput = (currentValue) => {
@@ -35,7 +41,6 @@ const CardBox = ({ products, setProducts }) => {
 
   const downloadImage = async () => {
     const dataUrl = await htmlToImage.toPng(domEl.current);
-    console.log(dataUrl);
     const blob = new Blob([JSON.stringify(dataUrl, null, 2)], {
       type: "application/json",
     });
@@ -51,12 +56,10 @@ const CardBox = ({ products, setProducts }) => {
 
   // Mint
   const mintProduct = async (product) => {
-    console.log({ product });
-
     try {
       setLoading(true);
-      // await updateAndPublish(product, 0, address, streamrRef);
-      await downloadImage();
+      await updateAndPublish(product, 0, account, streamrRef);
+      // await downloadImage();
       return;
 
       await (await contract.mint(address, product.id, 1, "0x")).wait();
@@ -78,19 +81,28 @@ const CardBox = ({ products, setProducts }) => {
     streamrRef.current
       .subscribe(STREAM_ID, (content) => {
         console.log({ content });
+        setCurrUsers((prev) => [...prev, content.user]);
         setProducts((prev) =>
           prev.map((x) => (x.id === content.id ? content : x))
         );
-        setCurrData({ ...content });
+
+        // setCurrData({ ...content });
       })
       .then((res) => {
-        console.log("subscribe", res);
+        console.log("SUBSCRIBE");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("ERROR"));
   }, [setProducts]);
+
+  console.log({ currUsers });
+
+  // let a = currUsers.filter(isUnique);
+
+  console.log("dfadsf");
 
   return (
     <div className="flex rounded-md mt-8">
+      {/* RIGHT */}
       <div
         className="text-white max-w-3xl mx-auto grid 
     grid-row-1 gap-8 p-2 md:grid-cols-3 md:gap-4"
@@ -101,7 +113,6 @@ const CardBox = ({ products, setProducts }) => {
             className="cursor-pointer text-center bg-white rounded-md p-4"
             onClick={() => {
               setCurrData(item);
-              console.log(item);
             }}
           >
             <Image
@@ -119,14 +130,11 @@ const CardBox = ({ products, setProducts }) => {
         ))}
       </div>
 
+      {/* LEFT */}
       {currData && (
         <div className="cardBox rounded-md p-2 space-y-4 w-80 m-4">
           <div className="bg-orange-300 rounded-md p-2 space-y-4">
-            <div
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-            >
+            <div className="flex justify-bwtween items-center">
               <div variant="body1" color="">
                 <div className="text-black">
                   {currData.title == "new title"
@@ -134,13 +142,17 @@ const CardBox = ({ products, setProducts }) => {
                     : currData.title}
                 </div>
               </div>
-              <div variant="body1" color="">
-                <div className="text-black">{currData?.user}</div>
-              </div>
             </div>
           </div>
           {isLoggedIn && (
-            <div>
+            <div className="space-y-4">
+              <div className="flex justify-center items-center">
+                <span>Live users: {[...new Set(currUsers)].length}</span>
+                <span className="flex h-3 w-3 ml-2">
+                  <span className="animate-ping inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                </span>
+              </div>
+
               <button
                 className="p-4 bg-orange-500 rounded w-full"
                 onClick={() => {

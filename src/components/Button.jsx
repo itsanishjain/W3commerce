@@ -5,9 +5,6 @@ import { truncateAddress } from "../../src/utils/helpers";
 
 export default function Button({ text, onClick }) {
   const { account } = useContext(UserContext);
-
-  console.log(account);
-
   return (
     <div
       className=" mt-8 max-w-sm rounded-lg bg-stone-500 text-center font-semibold text-lg"

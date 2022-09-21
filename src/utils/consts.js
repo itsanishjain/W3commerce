@@ -1,4 +1,5 @@
 export const STREAM_ID = "0x2ea3bf6b653375fb8facfb67f19937e46840a7d4/lands/";
+export const TABLE_NAME = "_80001_2123";
 
 export const landStatus = [
   {

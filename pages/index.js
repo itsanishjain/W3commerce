@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
 import Loader from "../src/components/Loader";
 import CardBox from "../src/components/CardBox";
@@ -7,19 +7,13 @@ import { readTable } from "../src/utils/helpers";
 import WalletModal from "../src/components/WalletModal";
 import Button from "../src/components/Button";
 
-
-
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
   useEffect(() => {
-    console.log("Index useEffect running...............");
-
     readTable().then((res) => {
-      console.log(res);
       const l = Object.keys(res).length;
 
       let d = [];
