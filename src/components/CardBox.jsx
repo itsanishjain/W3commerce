@@ -1,28 +1,24 @@
+import toast from "react-hot-toast";
 import Image from "next/image";
 import Loader from "./Loader";
-import { useState, useEffect, useRef, useContext } from "react";
-import toast from "react-hot-toast";
-import { providers, Contract, utils } from "ethers";
-
+import * as htmlToImage from "html-to-image";
 import { StreamrClient } from "streamr-client";
+import { providers, Contract, utils } from "ethers";
+import { useState, useEffect, useRef, useContext } from "react";
 
 import { STREAM_ID } from "../utils/consts";
+import { UserContext } from "../context/UserContext";
 import { contractAddress, abi } from "../utils/addressAndABI";
 import { nftDotStorage, updateAndPublish } from "../utils/helpers";
-
-import * as htmlToImage from "html-to-image";
-
-import { UserContext } from "../context/UserContext";
 
 const CardBox = ({ products, setProducts }) => {
   const { isLoggedIn, account, library, chainId } = useContext(UserContext);
 
-  const streamrRef = useRef();
   const domEl = useRef();
+  const streamrRef = useRef();
 
   const [quantity, setQuantity] = useState(1);
   const [currData, setCurrData] = useState();
-  const [currId, setCurrId] = useState();
   const [loading, setLoading] = useState(false);
   const [currUsers, setCurrUsers] = useState([]);
 
@@ -35,7 +31,7 @@ const CardBox = ({ products, setProducts }) => {
     else setQuantity(v);
   };
 
-  const downloadImage = async () => {
+  const UploadToIPFSForMetadata = async () => {
     const dataUrl = await htmlToImage.toPng(domEl.current);
     const blob = new Blob([JSON.stringify(dataUrl, null, 2)], {
       type: "application/json",
@@ -48,7 +44,7 @@ const CardBox = ({ products, setProducts }) => {
     setLoading(true);
 
     await updateAndPublish(product, 0, account, streamrRef);
-    // await downloadImage();
+    await UploadToIPFSForMetadata();
 
     if (library.connection.url !== "metamask") {
       library.provider.http.connection.url = RPC_NETWORK_URLS[chainId];
@@ -86,22 +82,17 @@ const CardBox = ({ products, setProducts }) => {
     });
     streamrRef.current
       .subscribe(STREAM_ID, (content) => {
-        console.log({ content });
         setCurrUsers((prev) => [...prev, content.user]);
         setProducts((prev) =>
           prev.map((x) => (x.id === content.id ? content : x))
         );
-
-        // setCurrData({ ...content });
       })
-      .then((res) => {
-        console.log("SUBSCRIBE");
-      })
+      .then((res) => {})
       .catch((err) => console.error("ERROR"));
   }, [setProducts]);
 
   return (
-    <div className="flex rounded-md mt-8">
+    <div className="flex rounded-md bg-gradient-to-r from-yellow-200 to-yellow-400 mt-24">
       {/* RIGHT */}
       <div
         className="text-white max-w-3xl mx-auto grid 
@@ -151,7 +142,7 @@ const CardBox = ({ products, setProducts }) => {
                   Live users: {[...new Set(currUsers)].length}
                 </span>
                 <span className="flex h-3 w-3 ml-2">
-                  <span className="animate-ping inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="animate-ping inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
                 </span>
               </div>
 
@@ -159,7 +150,6 @@ const CardBox = ({ products, setProducts }) => {
                 className="p-4 bg-orange-500 rounded w-full"
                 onClick={() => {
                   mintProduct(currData);
-                  setCurrId(currData.id);
                 }}
               >
                 {loading ? (

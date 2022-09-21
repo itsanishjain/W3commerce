@@ -7,10 +7,10 @@ export default function Button({ text, onClick }) {
   const { account } = useContext(UserContext);
   return (
     <div
-      className=" mt-8 max-w-md rounded-lg bg-stone-500 text-center font-semibold text-lg"
+      className=" mt-8 max-w-md rounded-lg bg-yellow-600 text-center font-semibold text-lg"
       onClick={onClick}
     >
-      <span className="block px-2 py-4 rounded-lg bg-stone-700 text-xl text-white -translate-y-2 active:-translate-y-1 cursor-pointer">
+      <span className="block px-2 py-4 rounded-lg bg-yellow-400 text-xl text-white -translate-y-2 active:-translate-y-1 cursor-pointer">
         {!account ? text : truncateAddress(account)}
       </span>
     </div>
