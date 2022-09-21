@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Head from "next/head";
-// import Image from "next/image";
+import Image from "next/image";
 
 // import astronaut from "../src/images/astronaut.png";
-// import img1 from "../public/img1.png";
-// import img2 from "../public/img2.png";
-// import img3 from "../public/img3.png";
+import img1 from "../public/img1.png";
+import img2 from "../public/img2.png";
+import img3 from "../public/img3.png";
 // import img4 from "../public/img4.png";
 
 const App = () => (
@@ -41,12 +41,12 @@ const App = () => (
                 <span className="block xl:inline">W3Commerce</span>
               </h1>
               <p className="mx-auto text-base text-white sm:max-w-md lg:text-xl md:max-w-3xl">
-                Support you favorite content creators and earn rewards
+                Buy togethe, save together with us
               </p>
               <div className="relative flex flex-col sm:flex-row sm:space-x-4">
                 <Link href="/marketplace" passHref>
                   <a className="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-gradient-to-r from-yellow-500 to-yellow-100 text-black rounded-md sm:mb-0 hover:bg-yellow-700 sm:w-auto">
-                    Explore Creators
+                    Explore Marketplace
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5 ml-1"
@@ -85,13 +85,13 @@ const App = () => (
     <section className="w-full  pt-7 pb-7 md:pt-20 md:pb-24">
       <div className="box-border flex flex-col items-center content-center px-8 mx-auto leading-6 text-black border-0 border-gray-300 border-solid md:flex-row max-w-7xl lg:px-16">
         <div className="box-border relative w-full max-w-md px-4 mt-5 mb-4 -ml-5 text-center bg-no-repeat bg-contain border-solid md:ml-0 md:mt-0 md:max-w-none lg:mb-0 md:w-1/2 xl:pl-10">
-          {/* <Image
+          <Image
             src={img1}
             className="p-2 pl-6 pr-5 xl:pl-16 xl:pr-20 "
-            width="300px"
-            height="300px"
+            width="350px"
+            height="350px"
             alt="image"
-          /> */}
+          />
         </div>
 
         <div className="box-border order-first w-full text-black border-solid md:w-1/2 md:pl-10 md:order-none">
@@ -133,13 +133,13 @@ const App = () => (
     <section className="w-full  pt-7 pb-7 md:pt-20 md:pb-24">
       <div className="box-border flex flex-col items-center content-center px-8 mx-auto leading-6 text-black border-0 border-gray-300 border-solid md:flex-row max-w-7xl lg:px-16">
         <div className="box-border relative w-full max-w-md px-4 mt-5 mb-4 -ml-5 text-center bg-no-repeat bg-contain border-solid md:ml-0 md:mt-0 md:max-w-none lg:mb-0 md:w-1/2 xl:pl-10 order-last">
-          {/* <Image
+          <Image
             src={img2}
             className="p-2 pl-6 pr-5 xl:pl-16 xl:pr-20 "
-            width="300px"
-            height="300px"
+            width="350px"
+            height="350px"
             alt="image"
-          /> */}
+          />
         </div>
 
         <div className="box-border order-first w-full text-black border-solid md:w-1/2 md:pl-10 md:order-none">
@@ -181,13 +181,13 @@ const App = () => (
     <section className="w-full  pt-7 pb-7 md:pt-20 md:pb-24">
       <div className="box-border flex flex-col items-center content-center px-8 mx-auto leading-6 text-black border-0 border-gray-300 border-solid md:flex-row max-w-7xl lg:px-16">
         <div className="box-border relative w-full max-w-md px-4 mt-5 mb-4 -ml-5 text-center bg-no-repeat bg-contain border-solid md:ml-0 md:mt-0 md:max-w-none lg:mb-0 md:w-1/2 xl:pl-10">
-          {/* <Image
+          <Image
             src={img3}
             className="p-2 pl-6 pr-5 xl:pl-16 xl:pr-20 "
-            width="300px"
-            height="300px"
+            width="350px"
+            height="350px"
             alt="image"
-          /> */}
+          />
         </div>
 
         <div className="box-border order-first w-full text-black border-solid md:w-1/2 md:pl-10 md:order-none">
