@@ -2,6 +2,7 @@ import Image from "next/image";
 import Loader from "./Loader";
 import { useState, useEffect, useRef, useContext } from "react";
 import toast from "react-hot-toast";
+import { providers, Contract, utils } from "ethers";
 
 import { StreamrClient } from "streamr-client";
 
@@ -14,7 +15,7 @@ import * as htmlToImage from "html-to-image";
 import { UserContext } from "../context/UserContext";
 
 const CardBox = ({ products, setProducts }) => {
-  const { isLoggedIn, account } = useContext(UserContext);
+  const { isLoggedIn, account, library, chainId } = useContext(UserContext);
 
   const streamrRef = useRef();
   const domEl = useRef();
@@ -23,12 +24,7 @@ const CardBox = ({ products, setProducts }) => {
   const [currData, setCurrData] = useState();
   const [currId, setCurrId] = useState();
   const [loading, setLoading] = useState(false);
-
   const [currUsers, setCurrUsers] = useState([]);
-
-  function isUnique(value, index, array) {
-    return array.indexOf(value) === array.lastIndexOf(value);
-  }
 
   // Handle input
   const handleInput = (currentValue) => {
@@ -47,30 +43,40 @@ const CardBox = ({ products, setProducts }) => {
     await nftDotStorage(blob);
   };
 
-  // Contract init
-  // const contract = useContract({
-  //   addressOrName: contractAddress,
-  //   contractInterface: abi,
-  //   signerOrProvider: signer,
-  // });
-
   // Mint
   const mintProduct = async (product) => {
-    try {
-      setLoading(true);
-      await updateAndPublish(product, 0, account, streamrRef);
-      // await downloadImage();
-      return;
+    setLoading(true);
 
-      await (await contract.mint(address, product.id, 1, "0x")).wait();
-      // stremer code and database to make land status minted
-      await updateAndPublish(land, 1, address, streamrRef);
-      toast.success("Successfully Minted");
-    } catch (err) {
-      console.error(err);
-      toast.error("Something went wrong");
-      // await updateAndPublish(land, -1, "", streamrRef); // we need to only update
+    await updateAndPublish(product, 0, account, streamrRef);
+    // await downloadImage();
+
+    if (library.connection.url !== "metamask") {
+      library.provider.http.connection.url = RPC_NETWORK_URLS[chainId];
     }
+
+    const provider = await library.provider;
+    const web3Provider = new providers.Web3Provider(provider);
+
+    const contract = new Contract(
+      contractAddress,
+      abi,
+      web3Provider.getSigner()
+    );
+
+    const liveUsers = [...new Set(currUsers)].length + 1;
+    const price = (100 / liveUsers).toString();
+
+    try {
+      await (
+        await contract.mint(account, product.id, quantity, "0x", {
+          value: utils.parseEther(price),
+        })
+      ).wait();
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    }
+
     setLoading(false);
   };
 
@@ -93,12 +99,6 @@ const CardBox = ({ products, setProducts }) => {
       })
       .catch((err) => console.error("ERROR"));
   }, [setProducts]);
-
-  console.log({ currUsers });
-
-  // let a = currUsers.filter(isUnique);
-
-  console.log("dfadsf");
 
   return (
     <div className="flex rounded-md mt-8">
@@ -160,16 +160,11 @@ const CardBox = ({ products, setProducts }) => {
                   setCurrId(currData.id);
                 }}
               >
-                {currData.status === undefined && (
+                {loading ? (
+                  <Loader />
+                ) : (
                   <div className="text-lg font-bold">Mint</div>
                 )}
-                {currData.status === 0 && (
-                  <div className="text-lg font-bold">Minting</div>
-                )}
-                {currData.status === 1 && (
-                  <div className="text-lg font-bold">Minted</div>
-                )}
-                {currData.id == currId && loading && <Loader />}
               </button>
             </div>
           )}

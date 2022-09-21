@@ -1,4 +1,4 @@
-export const contractAddress = "0x105696784E4471956b711F77574a25E582bc2132";
+export const contractAddress = "0xccA1549cF515C2319fc5ba95b5b9b6b12Ca7A91d";
 export const abi = [
   {
     inputs: [],
@@ -285,7 +285,7 @@ export const abi = [
     ],
     name: "mint",
     outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "payable",
     type: "function",
   },
   {
