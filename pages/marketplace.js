@@ -6,6 +6,7 @@ import CardBox from "../src/components/CardBox";
 import { readTable } from "../src/utils/helpers";
 import WalletModal from "../src/components/WalletModal";
 import Button from "../src/components/Button";
+import RocketLoader from "../src/components/RocketLoader";
 
 const MarketPlace = () => {
   const [products, setProducts] = useState([]);
@@ -30,21 +31,22 @@ const MarketPlace = () => {
   }, []);
 
   return (
-    <div className="">
-      <div className="p-2 text-center">
-        {isModalOpen && <WalletModal setIsModalOpen={setIsModalOpen} />}
+    // <div className="">
+    //   <div className="p-2 text-center">
+    //     {isModalOpen && <WalletModal setIsModalOpen={setIsModalOpen} />}
 
-        <Button text={"Connect Wallet"} onClick={() => setIsModalOpen(true)} />
-        <span className="p-3 text-5xl text-center font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-red-600">
-          W3Commerce
-        </span>
-      </div>
-      {loading ? (
-        <Loader />
-      ) : (
-        <CardBox products={products} setProducts={setProducts} />
-      )}
-    </div>
+    //     <Button text={"Connect Wallet"} onClick={() => setIsModalOpen(true)} />
+    //     <span className="p-3 text-5xl text-center font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-red-600">
+    //       W3Commerce
+    //     </span>
+    //   </div>
+    //   {loading ? (
+    //     <Loader />
+    //   ) : (
+    //     <CardBox products={products} setProducts={setProducts} />
+    //   )}
+    // </div>
+    <RocketLoader />
   );
 };
 
