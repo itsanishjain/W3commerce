@@ -11,9 +11,9 @@ body {
 }
 
 .loader {
-  background: #4ecdc4;
-  background: -webkit-linear-gradient(to right, #556270, #4ecdc4);
-  background: linear-gradient(to right, #556270, #4ecdc4);
+  background: #eeae07;
+  background: -webkit-linear-gradient(to right, #fff, #eeae07);
+  background: linear-gradient(to right, #fff, #eeae07);
 }
 
 .inputBox {
