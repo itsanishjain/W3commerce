@@ -7,7 +7,7 @@ import { truncateAddress } from "../../utils/helpers";
 
 import metamask from "../../../public/metaMask.svg";
 import walletConnect from "../../../public/walletConnect.svg";
-import unstoppable from "../../../public/unstoppable.svg";
+import unstoppable from "../../../public/unstoppable.png";
 
 import { UserContext } from "../../context/UserContext";
 
