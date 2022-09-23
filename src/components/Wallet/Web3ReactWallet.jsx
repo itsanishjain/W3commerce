@@ -1,11 +1,16 @@
+import Image from "next/image";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 import { connectors } from "../../utils/connectors";
 import { truncateAddress } from "../../utils/helpers";
 
+import metamask from "../../../public/metaMask.svg";
+import walletConnect from "../../../public/walletConnect.svg";
+import unstoppable from "../../../public/unstoppable.svg";
+
 import { UserContext } from "../../context/UserContext";
-import Button from "../Button";
+
 const Web3ReactWallet = ({ setIsModalOpen }) => {
   const { account, activate, disconnect } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
@@ -25,34 +30,55 @@ const Web3ReactWallet = ({ setIsModalOpen }) => {
     setLoading(false);
   };
 
+  // flex justify-around items-center
   return (
     <div className="">
       {!account ? (
         <div className="flex flex-col space-y-4 w-full space-y-4 ">
           <button
-            className="text-white border-2 border-white p-4"
+            className="text-black border-2 border-black p-4 grid grid-cols-12 items-center"
             onClick={() => connectWallet("injected")}
           >
-            MetaMask
+            <div className="col-span-2">
+              <Image src={metamask} alt="metaMask" width={40} height={40} />
+            </div>
+            <div className="col-span-10">
+              <span className="text-md sm:text-xl">MetaMask</span>
+            </div>
           </button>
           <button
-            className="text-white border-2 border-white p-4"
+            className="text-black border-2 border-black p-4 grid grid-cols-12 items-center"
             onClick={() => connectWallet("walletConnect")}
           >
-            WalletConnect
+            <div className="col-span-2">
+              <Image
+                src={walletConnect}
+                alt="metaMask"
+                width={40}
+                height={40}
+              />
+            </div>
+            <div className="col-span-10">
+              <span className="text-md sm:text-xl">WalletConnect</span>
+            </div>
           </button>
           <button
-            className="text-white border-2 border-white p-4"
+            className="text-black border-2 border-black p-4 grid grid-cols-12 items-center"
             onClick={() => connectWallet("uauth")}
           >
-            uAuth
+            <div className="col-span-2">
+              <Image src={unstoppable} alt="metaMask" width={40} height={40} />
+            </div>
+            <div className="col-span-10">
+              <span className="text-md sm:text-xl">Unstoppable</span>
+            </div>
           </button>
         </div>
       ) : (
         <>
           <p>{truncateAddress(account)}</p>
           <button
-            className="text-white border-2 border-white p-4"
+            className="text-black border-2 border-black p-4"
             onClick={disconnect}
           >
             Disconnect
