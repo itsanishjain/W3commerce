@@ -99,8 +99,7 @@ const App = () => (
             Build a direct, meaningful connection with your audience
           </h2>
           <p className="pt-4 pb-8 m-0 leading-7 text-yellow-100 border-0 border-gray-300 sm:pr-12 xl:pr-32 lg:text-lg">
-            No ads, no trolls, no algorithms. Enjoy direct access and deeper
-            conversations with the people who matter the most.
+            No ads, no trolls, no algorithms.
           </p>
           <ul className="p-0 m-0 leading-6 border-0 border-gray-300 space-y-2">
             <li className="box-border relative py-1 pl-0 text-left text-gray-500 border-solid flex">
@@ -192,7 +191,7 @@ const App = () => (
 
         <div className="box-border order-first w-full text-black border-solid md:w-1/2 md:pl-10 md:order-none">
           <h2 className="m-0 text-xl font-semibold leading-tight border-0 border-gray-300 lg:text-3xl md:text-2xl text-yellow-400">
-            Take back creative control
+            give back creative products
           </h2>
           <p className="pt-4 pb-8 m-0 leading-7 text-yellow-100 border-0 border-gray-300 sm:pr-12 xl:pr-32 lg:text-lg">
             Create what you want and what your audience loves.
