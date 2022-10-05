@@ -5,6 +5,11 @@ const nextConfig = {
   images: {
     domains: ["fakestoreapi.com"],
   },
+  experimental: {
+    images: {
+      unoptimized: true,
+    },
+  },
 };
 
 module.exports = nextConfig;

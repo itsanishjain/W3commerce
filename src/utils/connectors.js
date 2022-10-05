@@ -30,7 +30,7 @@ const walletConnect = new WalletConnectConnector({
 
 export const uauth = new UAuthConnector({
   clientID: "6cdd592b-60b5-4bb5-b8aa-17f7a85f11a2",
-  redirectUri: "http://127.0.0.1:3000",
+  redirectUri: "https://w3commerce.vercel.app",
   // postLogoutRedirectUri: "http://127.0.0.1:3000",
   // Scope must include openid and wallet
   scope: "openid wallet",
